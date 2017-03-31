@@ -58,7 +58,10 @@ if __name__ == "__main__":
 
 		cv2.imshow('img',out)
 		k = cv2.waitKey(1)
-		food = foodStock.findFromCode(chr(k))
+		if k not in range(256):
+			food = None
+		else:
+			food = foodStock.findFromCode(chr(k))
 		if food is not None:
 
 			body.protein +=  food.protein
