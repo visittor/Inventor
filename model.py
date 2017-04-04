@@ -98,6 +98,21 @@ class Body(object):
 		self._AdevitK = float(kwargs['adevitk'])
 		self._AdevitC = float(kwargs['adevitc'])
 		self._AdevitB = float(kwargs['adevitb'])
+
+	def eat(self,food):
+		if food.__class__ != Food:
+			pass
+		else:
+			self._protein += food.protein
+			self._carb += food.carb
+			self._fat += food.fat
+			self._vitA += food.vitA
+			self._vitD += food.vitD
+			self._vitE += food.vitE
+			self._vitK += food.vitK
+			self._vitC += food.vitC
+			self._vitB += food.vitB
+
 	@property
 	def name(self):
 		a = self._name

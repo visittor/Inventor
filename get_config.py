@@ -25,12 +25,6 @@ class Stock(object):
 				dict_ = dict(list_)
 				print dict_
 				self._stock[dict_['code']] = self._Klass(**dict_)
-				# try:
-				# 	print self._Klass
-				# 	self._stock[dict_['code']] = self._Klass(**dict_)
-				# except KeyError:
-				# 	print dict_['code']
-				# 	raise Exception("Wrong config file style")
 			else:
 				break
 			n += 1
