@@ -2,16 +2,17 @@ try:
 	from ConfigParser import ConfigParser
 except ImportError:
 	from configParser import ConfigParser #ver. > 3
-from model import Food,Body
+from model import *
+from Doctor import *
 	
 class Stock(object):
 	def __init__(self,cfg_file = None,section = None,option = "one",Klass = None):
-		# self._cfg = ConfigParser.ConfigParser()
 		self._cfg = ConfigParser()
 		self._cfg.read(cfg_file)
 		self._section = section
 		self._Klass = Klass
 		self._stock = {}
+		#self.item if option == 'one'
 		if option == "one":
 			self.__create_stock_optionOne()
 		elif option == "many":
@@ -48,7 +49,6 @@ class Stock(object):
 		else:
 			pass
 
-
 class FoodStock(Stock):
 	def __init__(self):
 		Stock.__init__(self,cfg_file = "Food.ini",section = "Food",option = "many",Klass = Food)
@@ -56,3 +56,11 @@ class FoodStock(Stock):
 class BodyStock(Stock):
 	def __init__(self):
 		Stock.__init__(self,cfg_file = "Body.ini",section = "Body",option = "one",Klass = Body)
+
+class DiseasStock(Stock):
+	def __init__(self):
+		Stock.__init__(self,cfg_file = "Diseas.ini",section = "Diseas",option = "many",Klass = Diseas)
+
+class DoctorStock(Stock):
+	def __init__(self):
+		Stock.__init__(self,cfg_file = 'Diseas.ini',section = "Doctor",option = "one",Klass = Doctor)

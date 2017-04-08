@@ -4,6 +4,7 @@ import sys
 from graphic import *
 from model import *
 from get_config import *
+from Doctor import *
 
 class Bar1(Bar):
 	def __init__(self,lookup):
@@ -34,25 +35,28 @@ if __name__ == "__main__":
 	bar2 = Bar2(lookup)
 	bar3 = Bar3(lookup)
 	hexa = Hexagon()
-	# hexa = Polygon((300,305),)
+
 
 	foodStock = FoodStock()
 	bodyStock = BodyStock()
+	diseasStock = DiseasStock()
+	Doctor = DoctorStock().item
 	body = bodyStock.item
 
 	while True:
-		out = img
+		out = img.copy()
 
-		percenVit = [[float(body.vitA)/float(body.AdevitA)],
-					 [float(body.vitD)/float(body.AdevitD)],
-					 [float(body.vitE)/float(body.AdevitE)],
-					 [float(body.vitK)/float(body.AdevitK)],
-					 [float(body.vitC)/float(body.AdevitC)],
-					 [float(body.vitB)/float(body.AdevitB)],]
+		percenVit = [[body.report['vitA'],body.report['vitA']],
+					 [body.report['vitD'],body.report['vitD']],
+					 [body.report['vitE'],body.report['vitE']],
+					 [body.report['vitK'],body.report['vitK']],
+					 [body.report['vitC'],body.report['vitC']],
+					 [body.report['vitB'],body.report['vitB']],]
 		hexa.create_Polygon(percenVit,out)
-		bar1.create_bar(float(body.protein)/float(body.Adeprotein),out)
-		bar2.create_bar(float(body.carb)/float(body.Adecarb),out)
-		bar3.create_bar(float(body.fat)/float(body.Adefat),out)
+		bar1.create_bar(body.report['protein'],out)
+		bar2.create_bar(body.report['carb'],out)
+		bar3.create_bar(body.report['fat'],out)
+
 
 		cv2.imshow('img',out)
 		k = cv2.waitKey(1)
@@ -62,6 +66,7 @@ if __name__ == "__main__":
 			food = foodStock.findFromCode(chr(k))
 		if food is not None:
 			body.eat(food)
+			print body.report
 			# body.protein +=  food.protein
 			# body.carb += food.carb
 			# body.fat += food.fat
