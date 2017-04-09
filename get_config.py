@@ -44,10 +44,19 @@ class Stock(object):
 			pass
 
 	def findFromCode(self,code):
-		if code in self._stock:
-			return self._stock[code]
-		else:
-			pass
+		try:
+			out = []
+			for i in code:
+				if i in self._stock:
+					out.append(self._stock[i])
+				else:
+					pass
+			return out
+		except TypeError:
+			if code in self._stock:
+				return self._stock[code]
+			else:
+				pass
 
 class FoodStock(Stock):
 	def __init__(self):

@@ -3,7 +3,7 @@ try:
 except ImportError:
 	from configParser import ConfigParser #ver. > 3
 
-def make_meal(*args):
+def make_meal(foodList):
 	p = 0
 	c = 0 
 	f = 0 
@@ -14,7 +14,7 @@ def make_meal(*args):
 	K = 0
 	C = 0
 	B = 0
-	for i in args:
+	for i in foodList:
 		if i.__class__ == Food:
 			p += i.protein
 			c += i.carb
@@ -109,16 +109,16 @@ class Body(object):
 		self._name = kwargs['name']
 		self._code = kwargs['code']
 
-		self._protein = [0]
-		self._carb = [0]
-		self._fat = [0]
-		self._energy = [0]
-		self._vitA = [0]
-		self._vitD = [0]
-		self._vitE = [0]
-		self._vitK = [0]
-		self._vitC = [0]
-		self._vitB = [0]
+		self._protein = []
+		self._carb = []
+		self._fat = []
+		self._energy = []
+		self._vitA = []
+		self._vitD = []
+		self._vitE = []
+		self._vitK = []
+		self._vitC = []
+		self._vitB = []
 
 		self._Adeprotein = float(kwargs['adeprotein'])
 		self._Adecarb = float(kwargs['adecarb'])
@@ -133,7 +133,7 @@ class Body(object):
 
 		self._illness = None
 
-		self._report = {"protein":0.8,"carb":0.8,"fat":0.8,"energy":0.8,"vitA":0.8,"vitD":0.8,"vitE":0.8,"vitK":0.8,"vitC":0.8,"vitB":0.8}
+		self._report = {"protein":0,"carb":0,"fat":0,"energy":0,"vitA":0,"vitD":0,"vitE":0,"vitK":0,"vitC":0,"vitB":0}
 
 	def eat(self,food):
 		if food.__class__ != Food:
@@ -142,6 +142,7 @@ class Body(object):
 			self._protein.append(food.protein)
 			self._carb.append(food.carb)
 			self._fat.append(food.fat)
+			self._energy.append(food.energy)
 			self._vitA.append(food.vitA)
 			self._vitD.append(food.vitD)
 			self._vitE.append(food.vitE)
@@ -152,25 +153,25 @@ class Body(object):
 			
 
 	def __digest(self):
-		if len(self._protein) > 5:
+		if len(self._protein) > 10:
 			self._protein.pop(0)
-		if len(self._carb) > 5:
+		if len(self._carb) > 10:
 			self._carb.pop(0)
-		if len(self._fat) >5:
+		if len(self._fat) >10:
 			self._fat.pop(0)
-		if len(self._energy) > 5:
+		if len(self._energy) > 10:
 			self._energy.pop(0)
-		if len(self._vitA) > 5:
+		if len(self._vitA) > 10:
 			self._vitA.pop(0)
-		if len(self._vitD) > 5:
+		if len(self._vitD) > 10:
 			self._vitD.pop(0)
-		if len(self._vitE) > 5:
+		if len(self._vitE) > 10:
 			self._vitE.pop(0)
-		if len(self._vitK) > 5:
+		if len(self._vitK) > 10:
 			self._vitK.pop(0)
-		if len(self._vitC) > 2:
+		if len(self._vitC) > 4:
 			self._vitC.pop(0)#vitC and vitB should always have len == 2 before pop. Always append b4 pop.
-		if len(self._vitB) > 2:#Note: vitC and vitB dissolve by water.Body cant store it.
+		if len(self._vitB) > 4:#Note: vitC and vitB dissolve by water.Body cant store it.
 			self._vitB.pop(0)
 		
 	@property
@@ -250,12 +251,12 @@ class Body(object):
 	@property
 	def report(self):
 		self._report = {}
-		self._report["vitA"] = sum(self._vitA)/(len(self._vitA)*self._AdevitA)
-		self._report["vitD"] = sum(self._vitD)/(len(self._vitD)*self._AdevitD) 
-		self._report["vitE"] = sum(self._vitE)/(len(self._vitE)*self._AdevitE)
-		self._report["vitK"] = sum(self._vitK)/(len(self._vitK)*self._AdevitK)
-		self._report["vitC"] = sum(self._vitC)/(len(self._vitC)*self._AdevitC)
-		self._report["vitB"] = sum(self._vitB)/(len(self._vitB)*self._AdevitB)
+		self._report["vitA"] = sum(self._vitA)/(len(self._vitA)*self._AdevitA) if len(self._vitA) != 0 else 0
+		self._report["vitD"] = sum(self._vitD)/(len(self._vitD)*self._AdevitD) if len(self._vitD) != 0 else 0
+		self._report["vitE"] = sum(self._vitE)/(len(self._vitE)*self._AdevitE) if len(self._vitE) != 0 else 0
+		self._report["vitK"] = sum(self._vitK)/(len(self._vitK)*self._AdevitK) if len(self._vitK) != 0 else 0
+		self._report["vitC"] = sum(self._vitC)/(len(self._vitC)*self._AdevitC) if len(self._vitC) != 0 else 0
+		self._report["vitB"] = sum(self._vitB)/(len(self._vitB)*self._AdevitB) if len(self._vitB) != 0 else 0
 
 		min = 1
 		minKey = None
@@ -264,10 +265,10 @@ class Body(object):
 				min = value
 				minKey = key
 		self._report['lack_vit'] = minKey
-		self._report["protein"] = sum(self._protein)/(len(self._protein)*self._Adeprotein)
-		self._report["carb"] = sum(self._carb)/(len(self._carb)*self._Adecarb)
-		self._report["fat"] = sum(self._fat)/(len(self._fat)*self._Adefat)
-		self._report["energy"] = sum(self._energy)/(len(self._energy)*self._Adeenergy)
+		self._report["protein"] = sum(self._protein)/float(len(self._protein)*self._Adeprotein) if len(self._protein) != 0 else 0
+		self._report["carb"] = sum(self._carb)/(len(self._carb)*self._Adecarb) if len(self._carb) != 0 else 0
+		self._report["fat"] = sum(self._fat)/(len(self._fat)*self._Adefat) if len(self._fat) != 0 else 0
+		self._report["energy"] = sum(self._energy)/(len(self._energy)*self._Adeenergy) if len(self._energy) != 0 else 0
 		return self._report
 
 	@property
