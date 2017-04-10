@@ -17,7 +17,7 @@ class Doctor(object):
 		self._rangeVitB = eval(kwargs['rangevitb'])
 		self._reportFunc = reportFunc
 
-	def diagnose(body):
+	def diagnose(self,body):
 		diag_report = {}
 		report = body.report
 		if self._rangeProtein[0] < report['protein'] < self._rangeProtein[1]:
@@ -70,13 +70,13 @@ class Doctor(object):
 		else:
 			diag_report['vitB'] = 1 if report['vitB'] > self._rangeVitB[1] else -1
 		
-		diag_report['illness'] = body.illness(diag_report)
+		diag_report['illness'] = body.get_illness()
 
 		self._cure(diag_report,body)
 		final_report = self._reportFunc(diag_report)
 		return final_report
 
-	def _cure(self,diag_report):
+	def _cure(self,diag_report,body):
 		if self._illnessList.has_key(diag_report['illness']):
 			if diag_report[self._illnessList[diag_report['illness']]] > -1:
 				body.set_illness(None)

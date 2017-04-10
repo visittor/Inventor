@@ -248,8 +248,7 @@ class Body(object):
 		a = self._AdevitB
 		return a
 
-	@property
-	def report(self):
+	def __update_report(self):
 		self._report = {}
 		self._report["vitA"] = sum(self._vitA)/(len(self._vitA)*self._AdevitA) if len(self._vitA) != 0 else 0
 		self._report["vitD"] = sum(self._vitD)/(len(self._vitD)*self._AdevitD) if len(self._vitD) != 0 else 0
@@ -269,6 +268,10 @@ class Body(object):
 		self._report["carb"] = sum(self._carb)/(len(self._carb)*self._Adecarb) if len(self._carb) != 0 else 0
 		self._report["fat"] = sum(self._fat)/(len(self._fat)*self._Adefat) if len(self._fat) != 0 else 0
 		self._report["energy"] = sum(self._energy)/(len(self._energy)*self._Adeenergy) if len(self._energy) != 0 else 0
+	
+	@property
+	def report(self):
+		self.__update_report()
 		return self._report
 
 	@property
@@ -278,9 +281,10 @@ class Body(object):
 		else:
 			return True
 
-	def get_illness(self,inhibitor):
+	def get_illness(self):
 		if self._illness is not None:
-			return self._illness(inhibitor)
+			self.__update_report()
+			return self._illness(self._report)
 		return None
 
 	def set_illness(self,x):
@@ -299,37 +303,37 @@ class Diseas(object):
 		self._attackPoint = kwargs['attackpoint']
 	
 	def attack(self,body):
-		if body.report['lack_vit'].lower() == self._attackPoint:
+		if body.report['lack_vit'].lower() == self._attackPoint.lower():
 			if body.is_illness == False :
 				body.set_illness(self._symtom)
 
 def symtomA(inhibitor):
-	if inhibitor['vitA'] < 0:
+	if inhibitor['vitA'] < 0.5:
 		print "I'm lack of vitamin A"
 	return "vitA"
 
 def symtomD(inhibitor):
-	if inhibitor['vitD'] < 0:
+	if inhibitor['vitD'] < 0.5:
 		print "I'm lack of vitamin D"
 	return "vitD"
 
 def symtomE(inhibitor):
-	if inhibitor['vitE'] < 0:
+	if inhibitor['vitE'] < 0.5:
 		print "I'm lack of vitamin E"
 	return "vitE"
 
 def symtomK(inhibitor):
-	if inhibitor['vitK'] < 0:
+	if inhibitor['vitK'] < 0.5:
 		print "I'm lack of vitamin K"
 	return "vitK"
 
 def symtomC(inhibitor):
-	if inhibitor['vitC'] < 0:
+	if inhibitor['vitC'] < 0.5:
 		print "I'm lack of vitamin C"
 	return "vitC"
 
 def symtomB(inhibitor):
-	if inhibitor['vitB'] < 0:
+	if inhibitor['vitB'] < 0.5:
 		print "I'm lack of vitamin B"
 	return "vitB"
 
