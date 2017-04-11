@@ -132,6 +132,7 @@ class Body(object):
 		self._AdevitB = float(kwargs['adevitb'])
 
 		self._illness = None
+		self._bodyShape = None
 
 		self._report = {"protein":0,"carb":0,"fat":0,"energy":0,"vitA":0,"vitD":0,"vitE":0,"vitK":0,"vitC":0,"vitB":0}
 
@@ -150,6 +151,7 @@ class Body(object):
 			self._vitC.append(food.vitC)
 			self._vitB.append(food.vitB)
 		self.__digest()
+		self.__update_report()
 			
 
 	def __digest(self):
@@ -271,7 +273,6 @@ class Body(object):
 	
 	@property
 	def report(self):
-		self.__update_report()
 		return self._report
 
 	@property
@@ -283,7 +284,6 @@ class Body(object):
 
 	def get_illness(self):
 		if self._illness is not None:
-			self.__update_report()
 			return self._illness(self._report)
 		return None
 
@@ -292,6 +292,19 @@ class Body(object):
 			self._illness = x
 		elif x is None:
 			self._illness = None
+		else:
+			pass
+
+	def get_bodyShape(self):
+		if self._bodyShape is not None:
+			return self._bodyShape(self._report)
+		retrun None
+
+	def set_bodyshape_function(self,x):
+		if callable(x):
+			self._bodyShape = x:
+		elif x is None:
+			self._bodyShape = None
 		else:
 			pass
 
