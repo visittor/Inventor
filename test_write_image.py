@@ -1,3 +1,4 @@
+
 import cv2
 import numpy as np
 import sys
@@ -60,13 +61,16 @@ if __name__ == "__main__":
 
 		cv2.imshow('img',out)
 		k = cv2.waitKey(1)
-		if k not in range(256):
+
+		if k not in range(255):
 			food = None
 		else:
+			
 			food = foodStock.findFromCode(chr(k))
-		if food is not None:
-			body.eat(food)
-			print body.report
+		if  food is not None and len(food)>0:
+			print food
+			body.eat(food[0])
+			# print body.report
 			# body.protein +=  food.protein
 			# body.carb += food.carb
 			# body.fat += food.fat

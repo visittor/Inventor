@@ -298,11 +298,11 @@ class Body(object):
 	def get_bodyShape(self):
 		if self._bodyShape is not None:
 			return self._bodyShape(self._report)
-		retrun None
+		return None
 
 	def set_bodyshape_function(self,x):
 		if callable(x):
-			self._bodyShape = x:
+			self._bodyShape = x
 		elif x is None:
 			self._bodyShape = None
 		else:

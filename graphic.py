@@ -22,7 +22,7 @@ class Bar(object):
 		self.__maxHeight = maxHeight
 
 	def create_bar(self,percentage,img):
-		print self.__startPoint[0] - int(self.__maxHeight*percentage)
+		# print self.__startPoint[0] - int(self.__maxHeight*percentage)
 		img[self.__startPoint[0] - int(self.__maxHeight*percentage):self.__startPoint[0],self.__startPoint[1]:self.__startPoint[1]+self.__width,:] = self.__lookup[0:int(self.__maxHeight*percentage),0:self.__width,:] 
 
 

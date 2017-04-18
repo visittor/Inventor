@@ -44,6 +44,9 @@ class Stock(object):
 			pass
 
 	def findFromCode(self,code):
+		if type(code) == str:
+			if code in self._stock:
+				return [self._stock[code]]
 		try:
 			out = []
 			for i in code:

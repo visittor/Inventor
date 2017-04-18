@@ -174,7 +174,7 @@ def test_doctor():
 				error += 1
 				print "not get cure"
 			print "\n"
-	print "finish doctor test with error: ",error
+	print "finish doctor test with error: ????",error
 
 if __name__ == '__main__':
 	test_body()
