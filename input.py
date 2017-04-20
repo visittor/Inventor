@@ -12,7 +12,7 @@ class BusIn(object):
 		mask = 1
 		value = 0
 		for port in self._bus:
-			value += PIO.input(port)*mask
+			value += GPIO.input(port)*mask
 			mask *= 2
 		return value
 
@@ -44,7 +44,7 @@ class Set_interrupt(object):
 
 	def add_attr(self,name,value):
 		setattr(self.__class__,name,value)
-
+"""
 Set_interrupt.add_attr('gender','m')
 Set_interrupt.add_attr('age','1')
 Set_interrupt.add_attr('bodyStock',BodyStock())
@@ -75,7 +75,7 @@ def age3_select(cls):
 @Set_interrupt(32,GPIO.RISING)
 def eat_select(cls):
 	body = cls.bodyStock.findFormCode(cls.gender+cls.age)
-	""" read rfid"""
+	 """ """read rfid""""""
 	meal = make_meal(foodlist)
 	body.eat(meal)
 
@@ -87,6 +87,7 @@ def eat_select(cls):
 	body.show_illness()
 
 	body.get_bodyShape()
+"""
 
 
 
