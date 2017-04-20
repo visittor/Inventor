@@ -1,4 +1,4 @@
-import RPI.GPIO as GPIO
+import RPi.GPIO as GPIO
 from model import *
 from get_config import *
 
@@ -37,13 +37,14 @@ class Set_interrupt(object):
 
 	def __call__(self,func):
 		try:
-			GPIO.setup(self.port,GPIO.IN)
+			GPIO.setup(self.port,GPIO.IN,pull_up_down = GPIO.PUD_DOWN)
 		except:
 			print "something wrong file input.py line something"
-		GPIO.add_event_detect(self.port,self.event,callback = lambda x: func(self.__class__))
+		GPIO.add_event_detect(self.port,self.event,callback = lambda x: func(self.__class__),bouncetime = 200)
 
-	def add_attr(self,name,value):
-		setattr(self.__class__,name,value)
+	@classmethod
+	def add_attr(cls,name,value):
+		setattr(cls,name,value)
 """
 Set_interrupt.add_attr('gender','m')
 Set_interrupt.add_attr('age','1')
