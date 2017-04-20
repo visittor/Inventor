@@ -49,7 +49,7 @@ def create_test_config():
 					 'rangevitk':'(0.8,1.2)',
 					 'rangevitc':'(0.8,1.2)',
 					 'rangevitb':'(0.8,1.2)',
-					 'illnesslist':"{'vitA':'vitA','vitD':'vitD','vitE':'vitE','vitK':'vitK','vitC':'vitC','vitB':'vitB'}",
+					 'illnesslist':"{'diseasa':'vitA','diseasd':'vitD','disease':'vitE','diseask':'vitK','diseasc':'vitC','diseasb':'vitB'}",
 					}
 	return body_config,food_config,empty_food_config,doctor_config
 
@@ -127,7 +127,7 @@ def test_diseas():
 		if key[:3] == 'vit':
 			check_minVit_config[key] = value
 			body = Body(**body_config)
-			diseas = Diseas(symtom = 'symtom'+key[-1].upper(),attackpoint = key)
+			diseas = Diseas(symtom = 'symtom'+key[-1].upper(),attackpoint = key,name = 'diseas'+key[-1].lower())
 
 			body.eat(Food(**check_minVit_config))
 			body.eat(Food(**check_minVit_config))
@@ -136,6 +136,7 @@ def test_diseas():
 			print 'attack body with symtom'+key[-1]
 			diseas.attack(body)
 			attack_at = body.get_illness()
+			body.show_illness()
 			print 'if there are NO!! symtom show above this line, an error occure.'
 			print 'attact at ',attack_at,'(',key,')'
 
@@ -156,14 +157,14 @@ def test_doctor():
 		if key[:3] == 'vit':
 			check_minVit_config[key] = value
 			body = Body(**body_config)
-			diseas = Diseas(symtom = 'symtom'+key[-1].upper(),attackpoint = key)
+			diseas = Diseas(symtom = 'symtom'+key[-1].upper(),attackpoint = key,name = 'diseas'+key[-1].lower())
 			doctor = Doctor(lambda x:x['illness'],**doctor_config)
 
 			body.eat(Food(**check_minVit_config))
 			print 'want to inflect at',key
 			diseas.attack(body)
 			print 'Now i am inflected'
-			if doctor.diagnose(body).lower() != key.lower():
+			if doctor.diagnose(body).lower() != 'diseas'+key[-1].lower():
 				error += 1
 				print "[ inflect wrong target"
 

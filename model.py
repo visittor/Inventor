@@ -284,16 +284,20 @@ class Body(object):
 
 	def get_illness(self):
 		if self._illness is not None:
-			return self._illness(self._report)
+			return self._illness
 		return None
 
 	def set_illness(self,x):
-		if callable(x):
+		if x.__class__ == Diseas:
 			self._illness = x
 		elif x is None:
 			self._illness = None
 		else:
 			pass
+
+	def show_illness(self):
+		if self._illness is not None:
+			self._illness.symtom(self._report)
 
 	def get_bodyShape(self):
 		if self._bodyShape is not None:
@@ -312,13 +316,21 @@ class Diseas(object):
 
 	# def __init__(self,attackPoint,symtom = None):
 	def __init__(self,**kwargs):
+		self.name = kwargs['name']
 		self._symtom = eval(kwargs['symtom'])
 		self._attackPoint = kwargs['attackpoint']
 	
 	def attack(self,body):
 		if body.report['lack_vit'].lower() == self._attackPoint.lower():
 			if body.is_illness == False :
-				body.set_illness(self._symtom)
+				body.set_illness(self)
+
+	@property
+	def attackPoint(self):
+		return self._attackPoint
+
+	def symtom(self,inhibitor):
+		self._symtom(inhibitor)
 
 def symtomA(inhibitor):
 	if inhibitor['vitA'] < 0.5:

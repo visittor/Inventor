@@ -70,15 +70,18 @@ class Doctor(object):
 		else:
 			diag_report['vitB'] = 1 if report['vitB'] > self._rangeVitB[1] else -1
 		
-		diag_report['illness'] = body.get_illness()
+		diag_report['illness'] = body.get_illness().name
 
 		self._cure(diag_report,body)
 		final_report = self._reportFunc(diag_report)
 		return final_report
 
 	def _cure(self,diag_report,body):
+		print diag_report['illness'],self._illnessList
 		if self._illnessList.has_key(diag_report['illness']):
+
 			if diag_report[self._illnessList[diag_report['illness']]] > -1:
+
 				body.set_illness(None)
 				diag_report['illness'] = 'Null'
 		else:
