@@ -91,6 +91,15 @@ if __name__ == '__main__':
 
 		def run(self):
 			print "rfid thread"
+			self.Klass.bus.write(1)
+			self.Klass.RR.MIFAREReader.MFRC522_Init()
+			self.Klass.bus.write(2)
+			self.Klass.RR.MIFAREReader.MFRC522_Init()
+			self.Klass.bus.write(3)
+			self.Klass.RR.MIFAREReader.MFRC522_Init()
+			self.Klass.bus.write(4)
+			self.Klass.RR.MIFAREReader.MFRC522_Init()
+			time.sleep(0.1)
 			while 1==1:
 				count = 0
 				with ReadRfid._chip_select(self.Klass.bus,0,self.Klass.lock) as cs:
