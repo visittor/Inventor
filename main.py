@@ -81,11 +81,12 @@ if __name__ == '__main__':
 				self.lock.acquire()
 				#print'Enter read card number',self._value
 				self._bus.write(self._value)
-
+				time.sleep(0.2)
 		
 			def __exit__(self,type,value,traceback):
 				#print'Finish read card number',self._value
-				self._bus.write(6)
+				#self._bus.write(6)
+				time.sleep(0.1)
 				self.lock.release()
 
 		def run(self):
@@ -93,45 +94,45 @@ if __name__ == '__main__':
 			while 1==1:
 				count = 0
 				with ReadRfid._chip_select(self.Klass.bus,0,self.Klass.lock) as cs:
-					uid = self.Klass.RR.read_once()
+					uid = self.Klass.RR.get_uid(1)
 					print '1 ',uid
 					if len(uid)>0:
 						food = self.Klass.foodStock.findFromCode(str(uid))
 						self.Klass.foodlist[count] = food
 						count += 1
-					time.sleep(0.1)
+					#time.sleep(0.1)
 				with ReadRfid._chip_select(self.Klass.bus,1,self.Klass.lock) as cs:
-					uid = self.Klass.RR.read_once()
+					uid = self.Klass.RR.get_uid(1)
 					print '2 ',uid
 					if len(uid)>0:
 						food = self.Klass.foodStock.findFromCode(str(uid))
 						self.Klass.foodlist[count] = food
 						count += 1
-					time.sleep(0.1)
+					#time.sleep(0.1)
 				with ReadRfid._chip_select(self.Klass.bus,2,self.Klass.lock) as cs:
-					uid = self.Klass.RR.read_once()
+					uid = self.Klass.RR.get_uid(1)
 					print '3 ',uid
 					if len(uid)>0:
 						food = self.Klass.foodStock.findFromCode(str(uid))
 						self.Klass.foodlist[count] = food
 						count += 1
-					time.sleep(0.1)
+					#time.sleep(0.1)
 				with ReadRfid._chip_select(self.Klass.bus,3,self.Klass.lock) as cs:
-					uid = self.Klass.RR.read_once()
+					uid = self.Klass.RR.get_uid(1)
 					print '4 ',uid
 					if len(uid)>0:
 						food = self.Klass.foodStock.findFromCode(str(uid))
 						self.Klass.foodlist[count] = food
 						count += 1
-					time.sleep(0.1)
+					#time.sleep(0.1)
 				with ReadRfid._chip_select(self.Klass.bus,4,self.Klass.lock) as cs:
-					uid = self.Klass.RR.read_once()
+					uid = self.Klass.RR.get_uid(1)
 					print '5 ',uid
 					if len(uid)>0:
 						food = self.Klass.foodStock.findFromCode(str(uid))
 						self.Klass.foodlist[count] = food
 						count += 1
-					time.sleep(0.1)
+					#time.sleep(0.1)
 				print "/////////////////"
 			
 	class ShowGraphic(threading.Thread):
