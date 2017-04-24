@@ -27,8 +27,8 @@ if __name__ == '__main__':
 						'vitc':0,
 						'vitb':0,
 						}
-	Set_interrupt.add_attr('foodlist',[Food(**emptyconfig),Food(**emptyconfig),Food(**emptyconfig),Food(**emptyconfig,Food(**emptyconfig))])
-	Set_interrupt.add_attr('bus',Busout(18,16,14))
+	Set_interrupt.add_attr('foodlist',[Food(**emptyconfig),Food(**emptyconfig),Food(**emptyconfig),Food(**emptyconfig),Food(**emptyconfig)])
+	Set_interrupt.add_attr('bus',BusOut(18,16,12))
 
 	@Set_interrupt(29,GPIO.RISING)
 	def male_select(cls):
@@ -79,58 +79,60 @@ if __name__ == '__main__':
 				self.lock = lock
 			def __enter__(self):
 				self.lock.acquire()
-				print'Enter read card number',self._value
+				#print'Enter read card number',self._value
 				self._bus.write(self._value)
 
 		
 			def __exit__(self,type,value,traceback):
-				print'Finish read card number',self._value
+				#print'Finish read card number',self._value
+				self._bus.write(6)
 				self.lock.release()
 
 		def run(self):
 			print "rfid thread"
 			while 1==1:
 				count = 0
-				with _chip_select(self.Klass.bus,1,self.Klass.lock) as cs:
+				with ReadRfid._chip_select(self.Klass.bus,0,self.Klass.lock) as cs:
 					uid = self.Klass.RR.read_once()
-					print uid
+					print '1 ',uid
 					if len(uid)>0:
-						food = self.Klass.foodStock.findFormCode(str(uid))
+						food = self.Klass.foodStock.findFromCode(str(uid))
 						self.Klass.foodlist[count] = food
 						count += 1
-				time.sleep(0.01)
-				with _chip_select(self.Klass.bus,2,self.Klass.lock) as cs:
+					time.sleep(0.1)
+				with ReadRfid._chip_select(self.Klass.bus,1,self.Klass.lock) as cs:
 					uid = self.Klass.RR.read_once()
-					print uid
+					print '2 ',uid
 					if len(uid)>0:
-						food = self.Klass.foodStock.findFormCode(str(uid))
+						food = self.Klass.foodStock.findFromCode(str(uid))
 						self.Klass.foodlist[count] = food
 						count += 1
-				time.sleep(0.01)
-				with _chip_select(self.Klass.bus,3,self.Klass.lock) as cs:
+					time.sleep(0.1)
+				with ReadRfid._chip_select(self.Klass.bus,2,self.Klass.lock) as cs:
 					uid = self.Klass.RR.read_once()
-					print uid
+					print '3 ',uid
 					if len(uid)>0:
-						food = self.Klass.foodStock.findFormCode(str(uid))
+						food = self.Klass.foodStock.findFromCode(str(uid))
 						self.Klass.foodlist[count] = food
 						count += 1
-				time.sleep(0.01)
-				with _chip_select(self.Klass.bus,4,self.Klass.lock) as cs:
+					time.sleep(0.1)
+				with ReadRfid._chip_select(self.Klass.bus,3,self.Klass.lock) as cs:
 					uid = self.Klass.RR.read_once()
-					print uid
+					print '4 ',uid
 					if len(uid)>0:
-						food = self.Klass.foodStock.findFormCode(str(uid))
+						food = self.Klass.foodStock.findFromCode(str(uid))
 						self.Klass.foodlist[count] = food
 						count += 1
-				time.sleep(0.01)
-				with _chip_select(self.Klass.bus,5,self.Klass.lock) as cs:
+					time.sleep(0.1)
+				with ReadRfid._chip_select(self.Klass.bus,4,self.Klass.lock) as cs:
 					uid = self.Klass.RR.read_once()
-					print uid
+					print '5 ',uid
 					if len(uid)>0:
-						food = self.Klass.foodStock.findFormCode(str(uid))
+						food = self.Klass.foodStock.findFromCode(str(uid))
 						self.Klass.foodlist[count] = food
 						count += 1
-				time.sleep(0.01)
+					time.sleep(0.1)
+				print "/////////////////"
 			
 	class ShowGraphic(threading.Thread):
 		def __init__(self,cls,threadID):

@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-
+import threading
 class BusIn(object):
 	def __init__(self,*args):
 		self._bus = args
@@ -47,11 +47,12 @@ class Set_interrupt(object):
 
 	@classmethod
 	def add_thread(cls,thread_):
-		threads.append(thread_(cls,len(threads)))
+		print cls 
+		cls.threads.append(thread_(cls,len(cls.threads)))
 
 	@classmethod
 	def run(cls):
-		for i in threads:
+		for i in cls.threads:
 			i.start()
 
 
