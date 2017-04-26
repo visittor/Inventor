@@ -217,6 +217,7 @@ if __name__ == '__main__':
 
 					food = make_meal(self.Klass.foodlist)
 					#print "I am here",food.protein
+					self.Klass.lock.acquire()
 					percenVit = [[food.vitA,food.vitA],
 								[food.vitD,food.vitD],
 								[food.vitE,food.vitE],
@@ -230,6 +231,7 @@ if __name__ == '__main__':
 					bar3.create_bar(food.fat,out)
 
 					cv2.imshow('img',out)
+					self.Klass.lock.release()
 					k = cv2.waitKey(1)
 
 				cv2.destroyAllWindows()
