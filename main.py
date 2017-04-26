@@ -91,6 +91,7 @@ if __name__ == '__main__':
 
 		def run(self):
 			print "rfid thread"
+			self.Klass.lock.acquire()
 			self.Klass.bus.write(1)
 			self.Klass.RR.MIFAREReader.MFRC522_Init()
 			self.Klass.bus.write(2)
@@ -99,6 +100,7 @@ if __name__ == '__main__':
 			self.Klass.RR.MIFAREReader.MFRC522_Init()
 			self.Klass.bus.write(4)
 			self.Klass.RR.MIFAREReader.MFRC522_Init()
+			self.Klass.lock.release()
 			time.sleep(0.1)
 			while 1==1:
 				count = 0

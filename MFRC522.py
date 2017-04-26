@@ -108,11 +108,11 @@ class MFRC522:
   serNum = []
   
   def __init__(self, dev='/dev/spidev0.0', spd=1000000):
-	spi.openSPI(device=dev,speed=spd)
-	GPIO.setmode(GPIO.BOARD)
-	GPIO.setup(22, GPIO.OUT)
-	GPIO.output(self.NRSTPD, 1)
-	self.MFRC522_Init()
+  	spi.openSPI(device=dev,speed=spd)
+  	GPIO.setmode(GPIO.BOARD)
+  	GPIO.setup(22, GPIO.OUT)
+  	GPIO.output(self.NRSTPD, 1)
+  	self.MFRC522_Init()
   
   def MFRC522_Reset(self):
     self.Write_MFRC522(self.CommandReg, self.PCD_RESETPHASE)
@@ -381,7 +381,7 @@ class MFRC522:
         i = i+1
 
   def MFRC522_Init(self):
-	GPIO.output(self.NRSTPD, 1)
+	 GPIO.output(self.NRSTPD, 1)
 	
 	self.MFRC522_Reset();
 	
