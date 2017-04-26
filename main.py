@@ -109,7 +109,7 @@ if __name__ == '__main__':
 				count = 0
 				with ReadRfid._chip_select(self.Klass.bus,0,self.Klass.lock) as cs:
 					uid = self.Klass.RR.get_uid(0.5)
-					print '1 ',uid
+					# print '1 ',uid
 					if len(uid)>0:
 						food = self.Klass.foodStock.findFromCode(str(uid))
 						if len(food)>0:
@@ -123,7 +123,7 @@ if __name__ == '__main__':
 					#time.sleep(0.1)
 				with ReadRfid._chip_select(self.Klass.bus,1,self.Klass.lock) as cs:
 					uid = self.Klass.RR.get_uid(0.5)
-					print '2 ',uid
+					# print '2 ',uid
 					if len(uid)>0:
 						food = self.Klass.foodStock.findFromCode(str(uid))
 						if len(food)>0:
@@ -137,7 +137,7 @@ if __name__ == '__main__':
 					#time.sleep(0.1)
 				with ReadRfid._chip_select(self.Klass.bus,2,self.Klass.lock) as cs:
 					uid = self.Klass.RR.get_uid(0.5)
-					print '3 ',uid
+					# print '3 ',uid
 					if len(uid)>0:
 						food = self.Klass.foodStock.findFromCode(str(uid))
 						if len(food)>0:
@@ -151,7 +151,7 @@ if __name__ == '__main__':
 					#time.sleep(0.1)
 				with ReadRfid._chip_select(self.Klass.bus,3,self.Klass.lock) as cs:
 					uid = self.Klass.RR.get_uid(0.5)
-					print '4 ',uid
+					# print '4 ',uid
 					if len(uid)>0:
 						food = self.Klass.foodStock.findFromCode(str(uid))
 						if len(food)>0:
@@ -165,7 +165,7 @@ if __name__ == '__main__':
 					#time.sleep(0.1)
 				with ReadRfid._chip_select(self.Klass.bus,4,self.Klass.lock) as cs:
 					uid = self.Klass.RR.get_uid(0.5)
-					print '5 ',uid
+					# print '5 ',uid
 					if len(uid)>0:
 						food = self.Klass.foodStock.findFromCode(str(uid))
 						if len(food)>0:
@@ -177,7 +177,7 @@ if __name__ == '__main__':
 						self.Klass.foodlist[count] = None
 						count += 1
 					#time.sleep(0.1)
-				print "/////////////////"
+				# print "/////////////////"
 			
 	class ShowGraphic(threading.Thread):
 		def __init__(self,cls,threadID):
