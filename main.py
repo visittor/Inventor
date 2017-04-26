@@ -182,12 +182,6 @@ if __name__ == '__main__':
 				while True:
 					out = img.copy()
 
-					# percenVit = [[body.report['vitA'],body.report['vitA']],
-					# 		 [body.report['vitD'],body.report['vitD']],
-					# 		 [body.report['vitE'],body.report['vitE']],
-					# 		 [body.report['vitK'],body.report['vitK']],
-					# 		 [body.report['vitC'],body.report['vitC']],
-					# 		 [body.report['vitB'],body.report['vitB']],]
 					food = make_meal(self.Klass.foodlist)
 					percenVit = [[food.vitA,food.vitA],
 								[food.vitD,food.vitD],
