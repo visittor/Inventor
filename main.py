@@ -108,7 +108,7 @@ if __name__ == '__main__':
 			while 1==1:
 				count = 0
 				with ReadRfid._chip_select(self.Klass.bus,0,self.Klass.lock) as cs:
-					uid = self.Klass.RR.get_uid(1)
+					uid = self.Klass.RR.get_uid(0.5)
 					print '1 ',uid
 					if len(uid)>0:
 						food = self.Klass.foodStock.findFromCode(str(uid))
@@ -120,9 +120,9 @@ if __name__ == '__main__':
 					else:
 						self.Klass.foodlist[count] = None
 						count += 1
-					time.sleep(0.1)
+					#time.sleep(0.1)
 				with ReadRfid._chip_select(self.Klass.bus,1,self.Klass.lock) as cs:
-					uid = self.Klass.RR.get_uid(1)
+					uid = self.Klass.RR.get_uid(0.5)
 					print '2 ',uid
 					if len(uid)>0:
 						food = self.Klass.foodStock.findFromCode(str(uid))
@@ -134,9 +134,9 @@ if __name__ == '__main__':
 					else:
 						self.Klass.foodlist[count] = None
 						count += 1
-					time.sleep(0.1)
+					#time.sleep(0.1)
 				with ReadRfid._chip_select(self.Klass.bus,2,self.Klass.lock) as cs:
-					uid = self.Klass.RR.get_uid(1)
+					uid = self.Klass.RR.get_uid(0.5)
 					print '3 ',uid
 					if len(uid)>0:
 						food = self.Klass.foodStock.findFromCode(str(uid))
@@ -148,9 +148,9 @@ if __name__ == '__main__':
 					else:
 						self.Klass.foodlist[count] = None
 						count += 1
-					time.sleep(0.1)
+					#time.sleep(0.1)
 				with ReadRfid._chip_select(self.Klass.bus,3,self.Klass.lock) as cs:
-					uid = self.Klass.RR.get_uid(1)
+					uid = self.Klass.RR.get_uid(0.5)
 					print '4 ',uid
 					if len(uid)>0:
 						food = self.Klass.foodStock.findFromCode(str(uid))
@@ -162,9 +162,9 @@ if __name__ == '__main__':
 					else:
 						self.Klass.foodlist[count] = None
 						count += 1
-					time.sleep(0.1)
+					#time.sleep(0.1)
 				with ReadRfid._chip_select(self.Klass.bus,4,self.Klass.lock) as cs:
-					uid = self.Klass.RR.get_uid(1)
+					uid = self.Klass.RR.get_uid(0.5)
 					print '5 ',uid
 					if len(uid)>0:
 						food = self.Klass.foodStock.findFromCode(str(uid))
@@ -176,7 +176,7 @@ if __name__ == '__main__':
 					else:
 						self.Klass.foodlist[count] = None
 						count += 1
-					time.sleep(0.1)
+					#time.sleep(0.1)
 				print "/////////////////"
 			
 	class ShowGraphic(threading.Thread):
