@@ -120,7 +120,7 @@ if __name__ == '__main__':
 					else:
 						self.Klass.foodlist[count] = None
 						count += 1
-					#time.sleep(0.1)
+					time.sleep(0.1)
 				with ReadRfid._chip_select(self.Klass.bus,1,self.Klass.lock) as cs:
 					uid = self.Klass.RR.get_uid(1)
 					print '2 ',uid
@@ -134,7 +134,7 @@ if __name__ == '__main__':
 					else:
 						self.Klass.foodlist[count] = None
 						count += 1
-					#time.sleep(0.1)
+					time.sleep(0.1)
 				with ReadRfid._chip_select(self.Klass.bus,2,self.Klass.lock) as cs:
 					uid = self.Klass.RR.get_uid(1)
 					print '3 ',uid
@@ -148,7 +148,7 @@ if __name__ == '__main__':
 					else:
 						self.Klass.foodlist[count] = None
 						count += 1
-					#time.sleep(0.1)
+					time.sleep(0.1)
 				with ReadRfid._chip_select(self.Klass.bus,3,self.Klass.lock) as cs:
 					uid = self.Klass.RR.get_uid(1)
 					print '4 ',uid
@@ -162,7 +162,7 @@ if __name__ == '__main__':
 					else:
 						self.Klass.foodlist[count] = None
 						count += 1
-					#time.sleep(0.1)
+					time.sleep(0.1)
 				with ReadRfid._chip_select(self.Klass.bus,4,self.Klass.lock) as cs:
 					uid = self.Klass.RR.get_uid(1)
 					print '5 ',uid
@@ -176,7 +176,7 @@ if __name__ == '__main__':
 					else:
 						self.Klass.foodlist[count] = None
 						count += 1
-					#time.sleep(0.1)
+					time.sleep(0.1)
 				print "/////////////////"
 			
 	class ShowGraphic(threading.Thread):
