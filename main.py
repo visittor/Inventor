@@ -100,6 +100,8 @@ if __name__ == '__main__':
 			self.Klass.RR.MIFAREReader.MFRC522_Init()
 			self.Klass.bus.write(4)
 			self.Klass.RR.MIFAREReader.MFRC522_Init()
+			self.Klass.bus.write(5)
+			self.Klass.RR.MIFAREReader.MFRC522_Init()
 			self.Klass.lock.release()
 			time.sleep(0.1)
 			while 1==1:
