@@ -27,6 +27,7 @@ if __name__ == '__main__':
 						'vitc':0,
 						'vitb':0,
 						}
+	Set_interrupt.add_attr('emptyconfig',emptyconfig)
 	Set_interrupt.add_attr('foodlist',[Food(**emptyconfig),Food(**emptyconfig),Food(**emptyconfig),Food(**emptyconfig),Food(**emptyconfig)])
 	Set_interrupt.add_attr('bus',BusOut(18,16,12))
 
@@ -111,6 +112,11 @@ if __name__ == '__main__':
 					print '1 ',uid
 					if len(uid)>0:
 						food = self.Klass.foodStock.findFromCode(str(uid))
+						print food
+						self.Klass.foodlist[count] = food
+						count += 1
+					else:
+						food = Food(**self.Klass.emptyconfig)
 						self.Klass.foodlist[count] = food
 						count += 1
 					#time.sleep(0.1)
@@ -121,12 +127,20 @@ if __name__ == '__main__':
 						food = self.Klass.foodStock.findFromCode(str(uid))
 						self.Klass.foodlist[count] = food
 						count += 1
+					else:
+						food = Food(**self.Klass.emptyconfig)
+						self.Klass.foodlist[count] = food
+						count += 1
 					#time.sleep(0.1)
 				with ReadRfid._chip_select(self.Klass.bus,2,self.Klass.lock) as cs:
 					uid = self.Klass.RR.get_uid(1)
 					print '3 ',uid
 					if len(uid)>0:
 						food = self.Klass.foodStock.findFromCode(str(uid))
+						self.Klass.foodlist[count] = food
+						count += 1
+					else:
+						food = Food(**self.Klass.emptyconfig)
 						self.Klass.foodlist[count] = food
 						count += 1
 					#time.sleep(0.1)
@@ -137,12 +151,20 @@ if __name__ == '__main__':
 						food = self.Klass.foodStock.findFromCode(str(uid))
 						self.Klass.foodlist[count] = food
 						count += 1
+					else:
+						food = Food(**self.Klass.emptyconfig)
+						self.Klass.foodlist[count] = food
+						count += 1
 					#time.sleep(0.1)
 				with ReadRfid._chip_select(self.Klass.bus,4,self.Klass.lock) as cs:
 					uid = self.Klass.RR.get_uid(1)
 					print '5 ',uid
 					if len(uid)>0:
 						food = self.Klass.foodStock.findFromCode(str(uid))
+						self.Klass.foodlist[count] = food
+						count += 1
+					else:
+						food = Food(**self.Klass.emptyconfig)
 						self.Klass.foodlist[count] = food
 						count += 1
 					#time.sleep(0.1)
@@ -153,7 +175,7 @@ if __name__ == '__main__':
 			threading.Thread.__init__(self)
 			self.threadID = threadID
 			self.Klass = cls
-
+		
 		class _Bar1(Bar):
 			def __init__(self,lookup):
 				Bar.__init__(self,lookup,(314,5),30,300)
@@ -176,15 +198,16 @@ if __name__ == '__main__':
 			# dst =np.zeros((480,640,3),dtype = np.uint8)
 			lookup = create_Gradient(img.shape)
 			self.Klass.lock.release()
-			bar1 = _Bar1(lookup)
-			bar2 = _Bar2(lookup)
-			bar3 = _Bar3(lookup)
-			hexa = _Hexagon()
+			bar1 = ShowGraphic._Bar1(lookup)
+			bar2 = ShowGraphic._Bar2(lookup)
+			bar3 = ShowGraphic._Bar3(lookup)
+			hexa = ShowGraphic._Hexagon()
 			try:
 				while True:
 					out = img.copy()
 
 					food = make_meal(self.Klass.foodlist)
+					#print "I am here",food.protein
 					percenVit = [[food.vitA,food.vitA],
 								[food.vitD,food.vitD],
 								[food.vitE,food.vitE],
@@ -194,8 +217,8 @@ if __name__ == '__main__':
 
 					hexa.create_Polygon(percenVit,out)
 					bar1.create_bar(food.protein,out)
-					bar2.create_bar(body.card,out)
-					bar3.create_bar(body.fat,out)
+					bar2.create_bar(food.carb,out)
+					bar3.create_bar(food.fat,out)
 
 					cv2.imshow('img',out)
 					k = cv2.waitKey(1)

@@ -28,8 +28,8 @@ def make_meal(foodList):
 			B += i.vitB
 		else:
 			pass
-	dic = {"protein":p,"carb":c,"fat":f,"energy":en,"vita":A,"vitd":D,"vite":E,"vitk":K,"vitc":C,"vitb":B}
-	return Food(dic)
+	dic = {"protein":p,"carb":c,"fat":f,"energy":en,"vita":A,"vitd":D,"vite":E,"vitk":K,"vitc":C,"vitb":B,"name":'all',"code":"code"}
+	return Food(**dic)
 
 class Food(object):
 	# def __init__(self,name,protein,carb,fat,energy,vitA=0,vitD=0,vitE=0,vitK=0,vitC=0,vitB=0):
