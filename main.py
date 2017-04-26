@@ -114,7 +114,7 @@ if __name__ == '__main__':
 						food = self.Klass.foodStock.findFromCode(str(uid))
 						if len(food)>0:
 							self.Klass.foodlist[count] = food[0]
-						else
+						else:
 							self.Klass.foodlist[count] = None
 						count += 1
 					else:
@@ -128,7 +128,7 @@ if __name__ == '__main__':
 						food = self.Klass.foodStock.findFromCode(str(uid))
 						if len(food)>0:
 							self.Klass.foodlist[count] = food[0]
-						else
+						else:
 							self.Klass.foodlist[count] = None
 						count += 1
 					else:
@@ -142,7 +142,7 @@ if __name__ == '__main__':
 						food = self.Klass.foodStock.findFromCode(str(uid))
 						if len(food)>0:
 							self.Klass.foodlist[count] = food[0]
-						else
+						else:
 							self.Klass.foodlist[count] = None
 						count += 1
 					else:
@@ -156,7 +156,7 @@ if __name__ == '__main__':
 						food = self.Klass.foodStock.findFromCode(str(uid))
 						if len(food)>0:
 							self.Klass.foodlist[count] = food[0]
-						else
+						else:
 							self.Klass.foodlist[count] = None
 						count += 1
 					else:
@@ -170,7 +170,7 @@ if __name__ == '__main__':
 						food = self.Klass.foodStock.findFromCode(str(uid))
 						if len(food)>0:
 							self.Klass.foodlist[count] = food[0]
-						else
+						else:
 							self.Klass.foodlist[count] = None
 						count += 1
 					else:
