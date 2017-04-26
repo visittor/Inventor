@@ -112,12 +112,13 @@ if __name__ == '__main__':
 					print '1 ',uid
 					if len(uid)>0:
 						food = self.Klass.foodStock.findFromCode(str(uid))
-						print food
-						self.Klass.foodlist[count] = food
+						if len(food)>0:
+							self.Klass.foodlist[count] = food[0]
+						else
+							self.Klass.foodlist[count] = None
 						count += 1
 					else:
-						food = Food(**self.Klass.emptyconfig)
-						self.Klass.foodlist[count] = food
+						self.Klass.foodlist[count] = None
 						count += 1
 					#time.sleep(0.1)
 				with ReadRfid._chip_select(self.Klass.bus,1,self.Klass.lock) as cs:
@@ -125,11 +126,13 @@ if __name__ == '__main__':
 					print '2 ',uid
 					if len(uid)>0:
 						food = self.Klass.foodStock.findFromCode(str(uid))
-						self.Klass.foodlist[count] = food
+						if len(food)>0:
+							self.Klass.foodlist[count] = food[0]
+						else
+							self.Klass.foodlist[count] = None
 						count += 1
 					else:
-						food = Food(**self.Klass.emptyconfig)
-						self.Klass.foodlist[count] = food
+						self.Klass.foodlist[count] = None
 						count += 1
 					#time.sleep(0.1)
 				with ReadRfid._chip_select(self.Klass.bus,2,self.Klass.lock) as cs:
@@ -137,11 +140,13 @@ if __name__ == '__main__':
 					print '3 ',uid
 					if len(uid)>0:
 						food = self.Klass.foodStock.findFromCode(str(uid))
-						self.Klass.foodlist[count] = food
+						if len(food)>0:
+							self.Klass.foodlist[count] = food[0]
+						else
+							self.Klass.foodlist[count] = None
 						count += 1
 					else:
-						food = Food(**self.Klass.emptyconfig)
-						self.Klass.foodlist[count] = food
+						self.Klass.foodlist[count] = None
 						count += 1
 					#time.sleep(0.1)
 				with ReadRfid._chip_select(self.Klass.bus,3,self.Klass.lock) as cs:
@@ -149,11 +154,13 @@ if __name__ == '__main__':
 					print '4 ',uid
 					if len(uid)>0:
 						food = self.Klass.foodStock.findFromCode(str(uid))
-						self.Klass.foodlist[count] = food
+						if len(food)>0:
+							self.Klass.foodlist[count] = food[0]
+						else
+							self.Klass.foodlist[count] = None
 						count += 1
 					else:
-						food = Food(**self.Klass.emptyconfig)
-						self.Klass.foodlist[count] = food
+						self.Klass.foodlist[count] = None
 						count += 1
 					#time.sleep(0.1)
 				with ReadRfid._chip_select(self.Klass.bus,4,self.Klass.lock) as cs:
@@ -161,11 +168,13 @@ if __name__ == '__main__':
 					print '5 ',uid
 					if len(uid)>0:
 						food = self.Klass.foodStock.findFromCode(str(uid))
-						self.Klass.foodlist[count] = food
+						if len(food)>0:
+							self.Klass.foodlist[count] = food[0]
+						else
+							self.Klass.foodlist[count] = None
 						count += 1
 					else:
-						food = Food(**self.Klass.emptyconfig)
-						self.Klass.foodlist[count] = food
+						self.Klass.foodlist[count] = None
 						count += 1
 					#time.sleep(0.1)
 				print "/////////////////"
