@@ -207,4 +207,5 @@ if __name__ == '__main__':
 				cv2.destroyAllWindows()
 
 	Set_interrupt.add_thread(ReadRfid)
+	Set_interrupt.add_thread(ShowGraphic)
 	Set_interrupt.run()
