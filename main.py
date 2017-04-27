@@ -74,7 +74,7 @@ if __name__ == '__main__':
 		cls.body.eat(meal)
 		print "Eat!!!!"
 		print cls.body
-		diseas = cls.diseasStock.findFromCode('diseas'+cls.body.report['lack_vit'][-1].lower())
+		diseas = cls.diseasStock.findFromCode('diseas'+cls.body.report['lack_vit'][-1].lower())[0]
 		diseas.attack(cls.body)
 
 		cls.Doctor.diagnose(cls.body)
