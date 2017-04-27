@@ -36,33 +36,38 @@ if __name__ == '__main__':
 	def male_select(cls):
 		cls.gender = 'm'
 		cls.body = cls.bodyStock.findFormCode(cls.gender+cls.age)
+		print "choose male"
 
 	@Set_interrupt(31,GPIO.RISING)
 	def female_select(cls):
 		cls.gender = 'f'
 		cls.body = cls.bodyStock.findFormCode(cls.gender+cls.age)
+		print "choose female"
 
 	@Set_interrupt(33,GPIO.RISING)
 	def age1_select(cls):
 		cls.age = '1'
 		cls.body = cls.bodyStock.findFormCode(cls.gender+cls.age)
+		print "choose 1st age"
 
 	@Set_interrupt(35,GPIO.RISING)
 	def age2_select(cls):
 		cls.age = '2'
 		cls.body = cls.bodyStock.findFormCode(cls.gender+cls.age)
+		print "choose 2nd age"
 
 	@Set_interrupt(37,GPIO.RISING)
 	def age3_select(cls):
 		cls.age = '3'
 		cls.body = cls.bodyStock.findFormCode(cls.gender+cls.age)
+		print "choose 3th age"
 
 	@Set_interrupt(32,GPIO.RISING)
 	def eat_select(cls):
 		#read rfid
 		meal = make_meal(foodlist)
 		cls.body.eat(meal)
-
+		print "Eat!!!!"
 		diseas = cls.diseasStock.findFormCode('diseas'+cls.body.report['lack_vit'][-1].lower())
 		diseas.attack(cls.body)
 
@@ -246,6 +251,6 @@ if __name__ == '__main__':
 			finally:
 				cv2.destroyAllWindows()
 
-	Set_interrupt.add_thread(ReadRfid)
-	Set_interrupt.add_thread(ShowGraphic)
+	#Set_interrupt.add_thread(ReadRfid)
+	#Set_interrupt.add_thread(ShowGraphic)
 	Set_interrupt.run()
