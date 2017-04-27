@@ -65,7 +65,7 @@ if __name__ == '__main__':
 	@Set_interrupt(32,GPIO.RISING)
 	def eat_select(cls):
 		#read rfid
-		meal = make_meal(foodlist)
+		meal = make_meal(cls.foodlist)
 		cls.body.eat(meal)
 		print "Eat!!!!"
 		diseas = cls.diseasStock.findFromCode('diseas'+cls.body.report['lack_vit'][-1].lower())
