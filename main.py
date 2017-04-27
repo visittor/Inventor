@@ -77,11 +77,11 @@ if __name__ == '__main__':
 		diseas = cls.diseasStock.findFromCode('diseas'+cls.body.report['lack_vit'][-1].lower())[0]
 		diseas.attack(cls.body)
 
-		cls.Doctor.diagnose(cls.body)
+		# cls.Doctor.diagnose(cls.body)
 
-		cls.body.show_illness()
+		# cls.body.show_illness()
 
-		cls.body.get_bodyShape()
+		# cls.body.get_bodyShape()
 
 	class ReadRfid(threading.Thread):
 		def __init__(self,cls,threadID):
