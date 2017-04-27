@@ -65,6 +65,7 @@ class Set_interrupt(object):
 
 		for i in cls.threads:
 			i.join()
+		GPIO.cleanup()
 
 
 
