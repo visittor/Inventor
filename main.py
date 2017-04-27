@@ -36,31 +36,35 @@ if __name__ == '__main__':
 	def male_select(cls):
 		cls.gender = 'm'
 		cls.body = cls.bodyStock.findFromCode(cls.gender+cls.age)[0]
-		print body
+		print cls.body
 		print "choose male"
 
 	@Set_interrupt(31,GPIO.RISING)
 	def female_select(cls):
 		cls.gender = 'f'
 		cls.body = cls.bodyStock.findFromCode(cls.gender+cls.age)[0]
+		print cls.body
 		print "choose female"
 
 	@Set_interrupt(33,GPIO.RISING)
 	def age1_select(cls):
 		cls.age = '1'
 		cls.body = cls.bodyStock.findFromCode(cls.gender+cls.age)[0]
+		print cls.body
 		print "choose 1st age"
 
 	@Set_interrupt(35,GPIO.RISING)
 	def age2_select(cls):
 		cls.age = '2'
 		cls.body = cls.bodyStock.findFromCode(cls.gender+cls.age)[0]
+		print cls.body
 		print "choose 2nd age"
 
 	@Set_interrupt(37,GPIO.RISING)
 	def age3_select(cls):
 		cls.age = '3'
 		cls.body = cls.bodyStock.findFromCode(cls.gender+cls.age)[0]
+		print cls.body
 		print "choose 3th age"
 
 	@Set_interrupt(32,GPIO.RISING)
@@ -69,6 +73,7 @@ if __name__ == '__main__':
 		meal = make_meal(cls.foodlist)
 		cls.body.eat(meal)
 		print "Eat!!!!"
+		print cls.body
 		diseas = cls.diseasStock.findFromCode('diseas'+cls.body.report['lack_vit'][-1].lower())
 		diseas.attack(cls.body)
 
