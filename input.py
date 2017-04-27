@@ -29,10 +29,12 @@ class BusOut(object):
 class Set_interrupt(object):
 	threads = []
 	lock = threading.Lock()
+	e = threading.Event()
 	# class _interrupt_obj(obj):
 	def __init__(self,port,event):
 		self.port = port
 		self.event = event
+		
 
 	def __call__(self,func):
 		try:
@@ -54,6 +56,15 @@ class Set_interrupt(object):
 	def run(cls):
 		for i in cls.threads:
 			i.start()
+		cls.e.set()
+		while 1 == 1:
+			k = raw_input("k to kill program: ")
+			if k == 'k':
+				cls.e.clear()
+				break
+
+		for i in cls.threads:
+			i.join()
 
 
 

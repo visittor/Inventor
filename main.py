@@ -11,6 +11,7 @@ if __name__ == '__main__':
 	Set_interrupt.add_attr('gender','m')
 	Set_interrupt.add_attr('age','1')
 	Set_interrupt.add_attr('bodyStock',BodyStock())
+	Set_interrupt.add_attr('body',Set_interrupt.bodyStock.findFormCode('m1'))
 	Set_interrupt.add_attr('diseasStock',DiseasStock())
 	Set_interrupt.add_attr('foodStock',FoodStock())
 	Set_interrupt.add_attr('Doctor',DoctorStock().item)
@@ -34,38 +35,42 @@ if __name__ == '__main__':
 	@Set_interrupt(29,GPIO.RISING)
 	def male_select(cls):
 		cls.gender = 'm'
+		cls.body = cls.bodyStock.findFormCode(cls.gender+cls.age)
 
 	@Set_interrupt(31,GPIO.RISING)
 	def female_select(cls):
 		cls.gender = 'f'
+		cls.body = cls.bodyStock.findFormCode(cls.gender+cls.age)
 
 	@Set_interrupt(33,GPIO.RISING)
 	def age1_select(cls):
 		cls.age = '1'
+		cls.body = cls.bodyStock.findFormCode(cls.gender+cls.age)
 
 	@Set_interrupt(35,GPIO.RISING)
 	def age2_select(cls):
 		cls.age = '2'
+		cls.body = cls.bodyStock.findFormCode(cls.gender+cls.age)
 
 	@Set_interrupt(37,GPIO.RISING)
 	def age3_select(cls):
 		cls.age = '3'
+		cls.body = cls.bodyStock.findFormCode(cls.gender+cls.age)
 
 	@Set_interrupt(32,GPIO.RISING)
 	def eat_select(cls):
-		body = cls.bodyStock.findFormCode(cls.gender+cls.age)
 		#read rfid
 		meal = make_meal(foodlist)
-		body.eat(meal)
+		cls.body.eat(meal)
 
-		diseas = cls.diseasStock.findFormCode('diseas'+body.report['lack_vit'][-1].lower())
-		diseas.attack(body)
+		diseas = cls.diseasStock.findFormCode('diseas'+cls.body.report['lack_vit'][-1].lower())
+		diseas.attack(cls.body)
 
-		cls.Doctor.diagnose(body)
+		cls.Doctor.diagnose(cls.body)
 
-		body.show_illness()
+		cls.body.show_illness()
 
-		body.get_bodyShape()
+		cls.body.get_bodyShape()
 
 	class ReadRfid(threading.Thread):
 		def __init__(self,cls,threadID):
@@ -82,13 +87,12 @@ if __name__ == '__main__':
 				self.lock.acquire()
 				#print'Enter read card number',self._value
 				self._bus.write(self._value)
-				time.sleep(0.2)
 		
 			def __exit__(self,type,value,traceback):
 				#print'Finish read card number',self._value
 				#self._bus.write(6)
-				time.sleep(0.1)
 				self.lock.release()
+				time.sleep(0.1)
 
 		def run(self):
 			print "rfid thread"
@@ -105,7 +109,8 @@ if __name__ == '__main__':
 			self.Klass.RR.MIFAREReader.MFRC522_Init()
 			self.Klass.lock.release()
 			time.sleep(0.1)
-			while 1==1:
+			self.Klass.e.wait()
+			while self.Klass.e.is_set():
 				count = 0
 				with ReadRfid._chip_select(self.Klass.bus,0,self.Klass.lock) as cs:
 					uid = self.Klass.RR.get_uid(0.5)
@@ -212,23 +217,24 @@ if __name__ == '__main__':
 			bar3 = ShowGraphic._Bar3(lookup)
 			hexa = ShowGraphic._Hexagon()
 			try:
-				while True:
+				self.Klass.e.wait()
+				while self.Klass.e.is_set():
 					out = img.copy()
 
 					food = make_meal(self.Klass.foodlist)
 					#print "I am here",food.protein
 					self.Klass.lock.acquire()
-					percenVit = [[food.vitA,food.vitA],
-								[food.vitD,food.vitD],
-								[food.vitE,food.vitE],
-								[food.vitK,food.vitK],
-								[food.vitC,food.vitC],
-								[food.vitB,food.vitB],]
+					percenVit = [[food.vitA/self.Klass.body.AdevitA,food.vitA/self.Klass.body.AdevitA],
+								[food.vitD/self.Klass.body.AdevitD,food.vitD/self.Klass.body.AdevitD],
+								[food.vitE/self.Klass.body.AdevitE,food.vitE/self.Klass.body.AdevitE],
+								[food.vitK/self.Klass.body.AdevitK,food.vitK/self.Klass.body.AdevitK],
+								[food.vitC/self.Klass.body.AdevitC,food.vitC/self.Klass.body.AdevitC],
+								[food.vitB/self.Klass.body.AdevitB,food.vitB/self.Klass.body.AdevitB],]
 
 					hexa.create_Polygon(percenVit,out)
-					bar1.create_bar(food.protein,out)
-					bar2.create_bar(food.carb,out)
-					bar3.create_bar(food.fat,out)
+					bar1.create_bar(food.protein/self.Klass.body.Adeprotein,out)
+					bar2.create_bar(food.carb/self.Klass.body.Adecarb,out)
+					bar3.create_bar(food.fat/self.Klass.body.Adefat,out)
 
 					cv2.imshow('img',out)
 					self.Klass.lock.release()

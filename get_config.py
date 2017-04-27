@@ -67,7 +67,7 @@ class FoodStock(Stock):
 
 class BodyStock(Stock):
 	def __init__(self):
-		Stock.__init__(self,cfg_file = "Body.ini",section = "Body",option = "one",Klass = Body)
+		Stock.__init__(self,cfg_file = "Body.ini",section = "Body",option = "many",Klass = Body)
 
 class DiseasStock(Stock):
 	def __init__(self):
