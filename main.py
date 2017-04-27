@@ -36,6 +36,7 @@ if __name__ == '__main__':
 	def male_select(cls):
 		cls.gender = 'm'
 		cls.body = cls.bodyStock.findFromCode(cls.gender+cls.age)[0]
+		print body
 		print "choose male"
 
 	@Set_interrupt(31,GPIO.RISING)
