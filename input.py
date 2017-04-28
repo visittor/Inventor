@@ -38,7 +38,7 @@ class Set_interrupt(object):
 
 	def __call__(self,func):
 		try:
-			GPIO.setup(self.port,GPIO.IN,pull_up_down = GPIO.PUD_DOWN)
+			GPIO.setup(self.port,GPIO.IN,pull_up_down = GPIO.PUD_UP)
 			# GPIO.setup(self.port,GPIO.IN)
 		except:
 			print "something wrong file input.py line something"
