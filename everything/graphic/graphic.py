@@ -46,9 +46,9 @@ class Sound(threading.Thread):
 
 	def run(self):
 		pygame.mixer.init()
-		pygame.mixer.music.load("pause.mp3")
+		pygame.mixer.music.load(self.track_name)
 		pygame.mixer.music.play()
 
 		while pygame.mixer.music.get_busy() == True and exitFlag == 0:
 		    continue
-		    
+

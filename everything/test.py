@@ -1,5 +1,5 @@
-from model import *
-from Doctor import *
+from .model import *
+# from .Doctor import *
 def create_test_config():
 	body_config = {'name':'test','code':'code',
 					'adeprotein':1,

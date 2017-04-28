@@ -2,8 +2,8 @@ try:
 	from ConfigParser import ConfigParser
 except ImportError:
 	from configParser import ConfigParser #ver. > 3
-from model import *
-from Doctor import *
+from model.model import *
+from model.Doctor import *
 	
 class Stock(object):
 	def __init__(self,cfg_file = None,section = None,option = "one",Klass = None):
