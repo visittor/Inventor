@@ -31,7 +31,7 @@ class Read_RFID:
 			if status == self.MIFAREReader.MI_OK:
 				rfid_uid = uid
 				break
-			if time.clock()-t >= to:
+			if time.clock()-t >= to and to != 0:
 				print 'Reached timeout',to,'sec'
 				break
 			#else:

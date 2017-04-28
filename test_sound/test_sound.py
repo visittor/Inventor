@@ -22,8 +22,6 @@ def play_Sound():
 		    continue
 	print "Exit Sound\n"
 
-
-
 class DoSomething(threading.Thread):
 
 	def __init__(self,threadID,name):

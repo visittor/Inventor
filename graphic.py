@@ -1,6 +1,6 @@
 import numpy as np
 import cv2
-
+import threading
 def create_Gradient(size):
 	lookup = np.ones(size,dtype = np.uint8)
 	for i in range(0,size[0]):
@@ -39,3 +39,16 @@ class Polygon(object):
 		# cv2.polylines(img,[v.astype(int)],True,color)
 		cv2.fillPoly(img,[v.astype(int)],color)
 
+class Sound(threading.Thread):
+	def __init__(self,track_name):
+		threading.Thread.__init__(self)
+		self.track_name = track_name
+
+	def run(self):
+		pygame.mixer.init()
+		pygame.mixer.music.load("pause.mp3")
+		pygame.mixer.music.play()
+
+		while pygame.mixer.music.get_busy() == True and exitFlag == 0:
+		    continue
+		    

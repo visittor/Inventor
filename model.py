@@ -1,7 +1,3 @@
-try:
-	from ConfigParser import ConfigParser
-except ImportError:
-	from configParser import ConfigParser #ver. > 3
 
 def make_meal(foodList):
 	p = 0
