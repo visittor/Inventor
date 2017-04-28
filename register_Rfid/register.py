@@ -1,10 +1,10 @@
 try:
-	from ConfigParser import ConfigParser
+	from ConfigParser import ConfigParser,SafeConfigParser
 except ImportError:
-	from configParser import ConfigParser #ver. > 3
+	from configParser import ConfigParser,SafeConfigParser #ver. > 3
 from G6reader import *
-
-parser = ConfigParser.SafeConfigParser()
+import RPi.GPIO as GPIO
+parser =SafeConfigParser()
 RR = Read_RFID()
 
 while True:
@@ -68,6 +68,10 @@ while True:
 
 with open("config.ini","a") as f:
 	parser.write(f)
-
+GPIO.cleanup()
 print "[OK]"
+
+
+
+
 
