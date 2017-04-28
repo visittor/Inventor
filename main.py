@@ -32,42 +32,42 @@ if __name__ == '__main__':
 	Set_interrupt.add_attr('foodlist',[Food(**emptyconfig),Food(**emptyconfig),Food(**emptyconfig),Food(**emptyconfig),Food(**emptyconfig)])
 	Set_interrupt.add_attr('bus',BusOut(18,16,12))
 
-	@Set_interrupt(29,GPIO.RISING)
+	@Set_interrupt(29,GPIO.FALLING)
 	def male_select(cls):
 		cls.gender = 'm'
 		cls.body = cls.bodyStock.findFromCode(cls.gender+cls.age)[0]
 		print cls.body
 		print "choose male"
 
-	@Set_interrupt(31,GPIO.RISING)
+	@Set_interrupt(31,GPIO.FALLING)
 	def female_select(cls):
 		cls.gender = 'f'
 		cls.body = cls.bodyStock.findFromCode(cls.gender+cls.age)[0]
 		print cls.body
 		print "choose female"
 
-	@Set_interrupt(33,GPIO.RISING)
+	@Set_interrupt(33,GPIO.FALLING)
 	def age1_select(cls):
 		cls.age = '1'
 		cls.body = cls.bodyStock.findFromCode(cls.gender+cls.age)[0]
 		print cls.body
 		print "choose 1st age"
 
-	@Set_interrupt(35,GPIO.RISING)
+	@Set_interrupt(35,GPIO.FALLING)
 	def age2_select(cls):
 		cls.age = '2'
 		cls.body = cls.bodyStock.findFromCode(cls.gender+cls.age)[0]
 		print cls.body
 		print "choose 2nd age"
 
-	@Set_interrupt(37,GPIO.RISING)
+	@Set_interrupt(37,GPIO.FALLING)
 	def age3_select(cls):
 		cls.age = '3'
 		cls.body = cls.bodyStock.findFromCode(cls.gender+cls.age)[0]
 		print cls.body
 		print "choose 3th age"
 
-	@Set_interrupt(32,GPIO.RISING)
+	@Set_interrupt(32,GPIO.FALLING)
 	def eat_select(cls):
 		#read rfid
 		meal = make_meal(cls.foodlist)
