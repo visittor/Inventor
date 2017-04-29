@@ -73,11 +73,12 @@ if __name__ == '__main__':
 	def eat_select(cls):
 		#read rfid
 		if Set_interrupt.eat_Lock:
-			Set_interrupt.eat_Lock = 0
+			with cls.lock:
+				Set_interrupt.eat_Lock = 0
 			meal = make_meal(cls.foodlist)
 			cls.body.eat(meal)
 			print "Eat!!!!"
-			print cls.body
+			#print cls.body
 			diseas = cls.diseasStock.findFromCode('diseas'+cls.body.report['lack_vit'][-1].lower())[0]
 			diseas.attack(cls.body)
 
@@ -86,7 +87,8 @@ if __name__ == '__main__':
 			cls.body.show_illness()
 
 			cls.body.get_bodyShape()
-			Set_interrupt.eat_Lock = 1
+			with cls.lock:
+				Set_interrupt.eat_Lock = 1
 		else:
 			pass
 
