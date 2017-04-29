@@ -32,6 +32,8 @@ if __name__ == '__main__':
 	Set_interrupt.add_attr('foodlist',[Food(**emptyconfig),Food(**emptyconfig),Food(**emptyconfig),Food(**emptyconfig),Food(**emptyconfig)])
 	Set_interrupt.add_attr('bus',BusOut(18,16,12))
 
+	Set_interrupt.add_attr('eat_Lock',1)
+
 	@Set_interrupt(29,GPIO.FALLING)
 	def male_select(cls):
 		cls.gender = 'm'
@@ -70,18 +72,21 @@ if __name__ == '__main__':
 	@Set_interrupt(32,GPIO.FALLING)
 	def eat_select(cls):
 		#read rfid
-		meal = make_meal(cls.foodlist)
-		cls.body.eat(meal)
-		print "Eat!!!!"
-		print cls.body
-		diseas = cls.diseasStock.findFromCode('diseas'+cls.body.report['lack_vit'][-1].lower())[0]
-		diseas.attack(cls.body)
+		if Set_interrupt.eat_Lock:
+			Set_interrupt.eat_Lock = 0
+			meal = make_meal(cls.foodlist)
+			cls.body.eat(meal)
+			print "Eat!!!!"
+			print cls.body
+			diseas = cls.diseasStock.findFromCode('diseas'+cls.body.report['lack_vit'][-1].lower())[0]
+			diseas.attack(cls.body)
 
-		cls.Doctor.diagnose(cls.body)
+			cls.Doctor.diagnose(cls.body)
 
-		cls.body.show_illness()
+			cls.body.show_illness()
 
-		cls.body.get_bodyShape()
+			cls.body.get_bodyShape()
+		Set_interrupt.eat_Lock = 1
 
 	class ReadRfid(threading.Thread):
 		def __init__(self,cls,threadID):
@@ -203,15 +208,18 @@ if __name__ == '__main__':
 		
 		class _Bar1(Bar):
 			def __init__(self,lookup):
-				Bar.__init__(self,lookup,(314,5),30,300)
+				# Bar.__init__(self,lookup,(314,5),30,300)
+				Bar.__init__(self,lookup,(314,5),30,200)
 				pass
 		class _Bar2(Bar):
 			def __init__(self,lookup):
-				Bar.__init__(self,lookup,(314,105),30,300)
+				# Bar.__init__(self,lookup,(314,105),30,300)
+				Bar.__init__(self,lookup,(314,105),30,200)
 				pass
 		class _Bar3(Bar):
 			def __init__(self,lookup):
-				Bar.__init__(self,lookup,(314,205),30,300)
+				# Bar.__init__(self,lookup,(314,205),30,300)
+				Bar.__init__(self,lookup,(314,205),30,200)
 				pass
 		class _Hexagon(Polygon):
 			def __init__(self):

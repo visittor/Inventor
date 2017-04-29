@@ -15,6 +15,7 @@ def symtomE(inhibitor):
 
 def symtomK(inhibitor):
 	if inhibitor['vitK'] < 0.5:
+		Non_thr_sond("Sound/Vit_K.mp3")
 		print "I'm lack of vitamin K"
 	return "vitK"
 
