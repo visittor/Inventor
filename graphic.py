@@ -1,6 +1,7 @@
 import numpy as np
 import cv2
 import threading
+import pygame
 def create_Gradient(size):
 	lookup = np.ones(size,dtype = np.uint8)
 	for i in range(0,size[0]):
