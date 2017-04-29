@@ -86,7 +86,9 @@ if __name__ == '__main__':
 			cls.body.show_illness()
 
 			cls.body.get_bodyShape()
-		Set_interrupt.eat_Lock = 1
+			Set_interrupt.eat_Lock = 1
+		else:
+			pass
 
 	class ReadRfid(threading.Thread):
 		def __init__(self,cls,threadID):
