@@ -3,6 +3,7 @@ try:
 except ImportError:
 	from configParser import ConfigParser #ver. > 3
 from model import *
+from symtom import *
 from Doctor import *
 	
 class Stock(object):
