@@ -1,6 +1,5 @@
 from input import *
 from model import *
-from symtom import *
 from get_config import *
 from G6reader import *
 import threading 

@@ -1,3 +1,4 @@
+from symtom import *
 def make_meal(foodList):
 	p = 0
 	c = 0 
