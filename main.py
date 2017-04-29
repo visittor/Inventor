@@ -72,7 +72,8 @@ if __name__ == '__main__':
 	@Set_interrupt(32,GPIO.FALLING)
 	def eat_select(cls):
 		#read rfid
-		if Set_interrupt.eat_Lock:
+		print "Enter ..."
+		if Set_interrupt.eat_Lock == 1:
 			with cls.lock:
 				Set_interrupt.eat_Lock = 0
 			meal = make_meal(cls.foodlist)
@@ -87,10 +88,12 @@ if __name__ == '__main__':
 			cls.body.show_illness()
 
 			cls.body.get_bodyShape()
+			time.sleep(1)
 			with cls.lock:
 				Set_interrupt.eat_Lock = 1
 		else:
-			pass
+			print "In else"
+		print "Exit..."
 
 	class ReadRfid(threading.Thread):
 		def __init__(self,cls,threadID):
@@ -270,5 +273,5 @@ if __name__ == '__main__':
 				cv2.destroyAllWindows()
 
 	#Set_interrupt.add_thread(ReadRfid)
-	#Set_interrupt.add_thread(ShowGraphic)
+	Set_interrupt.add_thread(ShowGraphic)
 	Set_interrupt.run()

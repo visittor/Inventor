@@ -35,7 +35,9 @@ class Polygon(object):
 		self.__vertices = np.array(vertices,dtype = np.float32)
 
 	def create_Polygon(self,percentage,img,color = (0,255,255)):
-		percentage = 1.5 if percentage>1.5 else percentage
+		for i in percentage:
+			i[0] = 1.5 if i[0]>1.5 else i[0]
+			i[1] = 1.5 if i[1]>1.5 else i[1]
 		v = self.__centerPoint + (self.__vertices-self.__centerPoint)*percentage
 		v = v.reshape((-1,1,2))
 
