@@ -1,3 +1,4 @@
+from graphic import Sound,Non_thr_sond
 def symtomA(inhibitor):
 	if inhibitor['vitA'] < 0.5:
 		print "I'm lack of vitamin A"
