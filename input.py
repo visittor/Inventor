@@ -34,7 +34,6 @@ class Set_interrupt(object):
 	def __init__(self,port,event):
 		self.port = port
 		self.event = event
-		
 
 	def __call__(self,func):
 		try:
