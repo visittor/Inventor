@@ -237,7 +237,7 @@ if __name__ == '__main__':
 
 		def run(self):
 			self.Klass.lock.acquire()
-			img = cv2.imread("Template_draft1.png")
+			img = cv2.imread("Template_draft2.png")
 			# dst =np.zeros((480,640,3),dtype = np.uint8)
 			lookup = create_Gradient(img.shape)
 			self.Klass.lock.release()
