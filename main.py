@@ -6,6 +6,7 @@ import threading
 import numpy as np
 import cv2
 from graphic import *
+import RPi.GPIO as GPIO
 
 if __name__ == '__main__':
 	Set_interrupt.add_attr('gender','m')
@@ -33,6 +34,8 @@ if __name__ == '__main__':
 	Set_interrupt.add_attr('bus',BusOut(18,16,12))
 
 	Set_interrupt.add_attr('eat_Lock',1)
+
+	GPIO.setup(7,GPIO.OUT)
 
 	@Set_interrupt(29,GPIO.FALLING)
 	def male_select(cls):
@@ -74,7 +77,9 @@ if __name__ == '__main__':
 		#read rfid
 		print "Enter ..."
 		if Set_interrupt.eat_Lock == 1:
+
 			with cls.lock:
+				GPIO.output(port,1)
 				Set_interrupt.eat_Lock = 0
 			meal = make_meal(cls.foodlist)
 			cls.body.eat(meal)
@@ -90,10 +95,15 @@ if __name__ == '__main__':
 			cls.body.get_bodyShape()
 			time.sleep(1)
 			with cls.lock:
+				GPIO.output(port,0)
 				Set_interrupt.eat_Lock = 1
+			print "Exit..."
+			return
 		else:
 			print "In else"
-		print "Exit..."
+			return 
+
+		
 
 	class ReadRfid(threading.Thread):
 		def __init__(self,cls,threadID):
