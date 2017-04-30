@@ -77,8 +77,8 @@ if __name__ == '__main__':
 	def eat_select(cls):
 		#read rfid
 		print "Enter ..."
-		# if Set_interrupt.eat_Lock == 1:
-		if pygame.mixer.music.get_busy() == False:
+		if Set_interrupt.eat_Lock == 1:
+		# if pygame.mixer.music.get_busy() == False:
 
 			with cls.lock:
 				# GPIO.output(7,1)
