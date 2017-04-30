@@ -92,7 +92,7 @@ if __name__ == '__main__':
 
 			cls.Doctor.diagnose(cls.body)
 
-			cls.body.show_illness()
+			# cls.body.show_illness()
 
 			cls.body.get_bodyShape()
 			time.sleep(4)
