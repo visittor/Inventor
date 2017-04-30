@@ -249,7 +249,7 @@ if __name__ == '__main__':
 			bar2 = ShowGraphic._Bar2(lookup)
 			bar3 = ShowGraphic._Bar3(lookup)
 			hexa = ShowGraphic._Hexagon()
-			en_bar = En_Bar(lookup)
+			en_bar = ShowGraphic._En_Bar(lookup)
 
 			try:
 				self.Klass.e.wait()
@@ -270,7 +270,7 @@ if __name__ == '__main__':
 					bar1.create_bar(food.protein/self.Klass.body.Adeprotein,out)
 					bar2.create_bar(food.carb/self.Klass.body.Adecarb,out)
 					bar3.create_bar(food.fat/self.Klass.body.Adefat,out)
-					en_bar.en_bar.create_energy_bar(food.energy/self.Klass.energy,out)
+					en_bar.create_energy_bar(food.energy/self.Klass.body.Adeenergy,out)
 					cv2.imshow('img',out)
 					self.Klass.lock.release()
 					k = cv2.waitKey(1)
