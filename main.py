@@ -80,9 +80,9 @@ if __name__ == '__main__':
 		if Set_interrupt.eat_Lock == 1:
 		# if pygame.mixer.music.get_busy() == False:
 
-			with cls.lock:
-				# GPIO.output(7,1)
-				Set_interrupt.eat_Lock = 0
+				# with cls.lock:
+				# 	# GPIO.output(7,1)
+				# 	Set_interrupt.eat_Lock = 0
 			meal = make_meal(cls.foodlist)
 			cls.body.eat(meal)
 			print "Eat!!!!"
@@ -92,13 +92,13 @@ if __name__ == '__main__':
 
 			cls.Doctor.diagnose(cls.body)
 
-			# cls.body.show_illness()
+			cls.body.show_illness()
 
 			cls.body.get_bodyShape()
-			time.sleep(4)
-			with cls.lock:
-				# GPIO.output(7,0)
-				Set_interrupt.eat_Lock = 1
+			time.sleep(1)
+			# with cls.lock:
+			# 	# GPIO.output(7,0)
+			# 	Set_interrupt.eat_Lock = 1
 		else:
 			print "In else"
 
