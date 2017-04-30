@@ -1,4 +1,5 @@
 from graphic import Sound,Non_thr_sond
+from input import Set_interrupt
 def symtomA(inhibitor):
 	if inhibitor['vitA'] < 0.5:
 		print "I'm lack of vitamin A"
@@ -16,10 +17,12 @@ def symtomE(inhibitor):
 
 def symtomK(inhibitor):
 	if inhibitor['vitK'] < 0.5:
+		Set_interrupt.eat_Lock = 0
 		Non_thr_sond("Sound/Vit_K.mp3")
 		# thr = Sound("Sound/Vit_K.mp3")
 		# thr.start()
 		print "I'm lack of vitamin K"
+		Set_interrupt.eat_Lock = 1
 	return "vitK"
 
 def symtomC(inhibitor):
