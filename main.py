@@ -78,15 +78,10 @@ if __name__ == '__main__':
 		#read rfid
 		print "Enter ..."
 		if Set_interrupt.eat_Lock == 1:
-		# if pygame.mixer.music.get_busy() == False:
-
-				# with cls.lock:
-				# 	# GPIO.output(7,1)
-				# 	Set_interrupt.eat_Lock = 0
+			# Set_interrupt.eat_Lock = 0
 			meal = make_meal(cls.foodlist)
 			cls.body.eat(meal)
 			print "Eat!!!!"
-			#print cls.body
 			diseas = cls.diseasStock.findFromCode('diseas'+cls.body.report['lack_vit'][-1].lower())[0]
 			diseas.attack(cls.body)
 
@@ -96,9 +91,7 @@ if __name__ == '__main__':
 
 			cls.body.get_bodyShape()
 			time.sleep(1)
-			# with cls.lock:
-			# 	# GPIO.output(7,0)
-			# 	Set_interrupt.eat_Lock = 1
+			# Set_interrupt.eat_Lock = 1
 		else:
 			print "In else"
 
