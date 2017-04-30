@@ -219,32 +219,38 @@ if __name__ == '__main__':
 		class _Bar1(Bar):
 			def __init__(self,lookup):
 				# Bar.__init__(self,lookup,(314,5),30,300)
-				Bar.__init__(self,lookup,(845,107),30,368)
+				Bar.__init__(self,lookup,(846,107),98,365)
 				pass
 		class _Bar2(Bar):
 			def __init__(self,lookup):
 				# Bar.__init__(self,lookup,(314,105),30,300)
-				Bar.__init__(self,lookup,(845,267),30,368)
+				Bar.__init__(self,lookup,(846,267),98,365)
 				pass
 		class _Bar3(Bar):
 			def __init__(self,lookup):
 				# Bar.__init__(self,lookup,(314,205),30,300)
-				Bar.__init__(self,lookup,(845,427),30,200)
+				Bar.__init__(self,lookup,(846,427),98,365)
 				pass
 		class _Hexagon(Polygon):
 			def __init__(self):
 				Polygon.__init__(self,[1353,684],[[1308,596],[1397,596],[1441,685],[1397,773],[1309,773],[1264,684]])
+		class _En_Bar(Energy_Bar):
+			def __init__(self,lookup):
+				Energy_Bar.__init__(self,lookup,(846,750),250,368)
 
 		def run(self):
 			self.Klass.lock.acquire()
 			img = cv2.imread("Template_draft2.png")
 			# dst =np.zeros((480,640,3),dtype = np.uint8)
-			lookup = create_Gradient(img.shape)
+			# lookup = create_Gradient(img.shape)
+			lookup = cv2.imread("gradient_PCF.png")
 			self.Klass.lock.release()
 			bar1 = ShowGraphic._Bar1(lookup)
 			bar2 = ShowGraphic._Bar2(lookup)
 			bar3 = ShowGraphic._Bar3(lookup)
 			hexa = ShowGraphic._Hexagon()
+			en_bar = En_Bar(lookup)
+
 			try:
 				self.Klass.e.wait()
 				while self.Klass.e.is_set():
@@ -264,7 +270,7 @@ if __name__ == '__main__':
 					bar1.create_bar(food.protein/self.Klass.body.Adeprotein,out)
 					bar2.create_bar(food.carb/self.Klass.body.Adecarb,out)
 					bar3.create_bar(food.fat/self.Klass.body.Adefat,out)
-
+					en_bar.en_bar.create_energy_bar(food.energy/self.Klass.energy,out)
 					cv2.imshow('img',out)
 					self.Klass.lock.release()
 					k = cv2.waitKey(1)
