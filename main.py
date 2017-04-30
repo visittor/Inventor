@@ -79,7 +79,7 @@ if __name__ == '__main__':
 		if Set_interrupt.eat_Lock == 1:
 
 			with cls.lock:
-				GPIO.output(port,1)
+				GPIO.output(7,1)
 				Set_interrupt.eat_Lock = 0
 			meal = make_meal(cls.foodlist)
 			cls.body.eat(meal)
@@ -95,7 +95,7 @@ if __name__ == '__main__':
 			cls.body.get_bodyShape()
 			time.sleep(1)
 			with cls.lock:
-				GPIO.output(port,0)
+				GPIO.output(7,0)
 				Set_interrupt.eat_Lock = 1
 			print "Exit..."
 			return
