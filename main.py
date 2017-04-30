@@ -35,7 +35,7 @@ if __name__ == '__main__':
 
 	Set_interrupt.add_attr('eat_Lock',1)
 
-	GPIO.setup(7,GPIO.OUT)
+	# GPIO.setup(7,GPIO.OUT)
 
 	@Set_interrupt(29,GPIO.FALLING)
 	def male_select(cls):
@@ -72,14 +72,14 @@ if __name__ == '__main__':
 		print cls.body
 		print "choose 3th age"
 
-	@Set_interrupt(32,GPIO.FALLING)
+	@Set_interrupt(7,GPIO.FALLING)
 	def eat_select(cls):
 		#read rfid
 		print "Enter ..."
 		if Set_interrupt.eat_Lock == 1:
 
 			with cls.lock:
-				GPIO.output(7,1)
+				# GPIO.output(7,1)
 				Set_interrupt.eat_Lock = 0
 			meal = make_meal(cls.foodlist)
 			cls.body.eat(meal)
@@ -95,7 +95,7 @@ if __name__ == '__main__':
 			cls.body.get_bodyShape()
 			time.sleep(1)
 			with cls.lock:
-				GPIO.output(7,0)
+				# GPIO.output(7,0)
 				Set_interrupt.eat_Lock = 1
 			print "Exit..."
 			return
