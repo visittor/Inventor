@@ -219,21 +219,21 @@ if __name__ == '__main__':
 		class _Bar1(Bar):
 			def __init__(self,lookup):
 				# Bar.__init__(self,lookup,(314,5),30,300)
-				Bar.__init__(self,lookup,(314,5),30,200)
+				Bar.__init__(self,lookup,(845,107),30,368)
 				pass
 		class _Bar2(Bar):
 			def __init__(self,lookup):
 				# Bar.__init__(self,lookup,(314,105),30,300)
-				Bar.__init__(self,lookup,(314,105),30,200)
+				Bar.__init__(self,lookup,(845,267),30,368)
 				pass
 		class _Bar3(Bar):
 			def __init__(self,lookup):
 				# Bar.__init__(self,lookup,(314,205),30,300)
-				Bar.__init__(self,lookup,(314,205),30,200)
+				Bar.__init__(self,lookup,(845,427),30,200)
 				pass
 		class _Hexagon(Polygon):
 			def __init__(self):
-				Polygon.__init__(self,[740,170],[[671,31],[808,31],[878,170],[810,308],[669,308],[602,170]])
+				Polygon.__init__(self,[1353,684],[[1308,596],[1397,596],[1441,685],[1397,773],[1309,773],[1264,684]])
 
 		def run(self):
 			self.Klass.lock.acquire()

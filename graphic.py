@@ -12,7 +12,7 @@ def create_Gradient(size):
 
 def mouse_callback(event,x,y,flags,params):
 	if event == cv2.EVENT_LBUTTONDOWN:
-		print (x,y)
+		print (y,x)
 
 class Bar(object):
 
@@ -34,7 +34,7 @@ class Polygon(object):
 		self.__centerPoint = np.array(centerPoint,dtype = np.float32)
 		self.__vertices = np.array(vertices,dtype = np.float32)
 
-	def create_Polygon(self,percentage,img,color = (0,255,255)):
+	def create_Polygon(self,percentage,img,color = (0,255,0)):
 		for i in percentage:
 			i[0] = 1.5 if i[0]>1.5 else i[0]
 			i[1] = 1.5 if i[1]>1.5 else i[1]
@@ -44,6 +44,22 @@ class Polygon(object):
 		# cv2.polylines(img,[v.astype(int)],True,color)
 		cv2.fillPoly(img,[v.astype(int)],color)
 
+class Energy_Bar(object):
+	def __init__(self,lookup,startPoint,width,maxHeight):
+		self.__lookup = lookup
+		self.__startPoint = startPoint
+		self.__width = width
+		self.__maxHeight = maxHeight
+	def create_energy_bar(self,percentage,img):
+		percentage = 1.5 if percentage>1.5 else percentage
+		img_temp = img[self.__startPoint[0] - int(self.__maxHeight*percentage):self.__startPoint[0],self.__startPoint[1]:self.__startPoint[1]+self.__width,:]
+		gradient = self.__lookup[0:int(self.__maxHeight*percentage),0:self.__width,:] 
+		# b,_,_ = cv2.split(img_temp)
+		_,mask = cv2.threshold(img_temp,127,255,cv2.THRESH_BINARY_INV)
+		bit_or = cv2.bitwise_or(img_temp.copy(),gradient,mask = mask[:,:,0])
+		img_temp = cv2.bitwise_or(img_temp,bit_or)
+		img[self.__startPoint[0] - int(self.__maxHeight*percentage):self.__startPoint[0],self.__startPoint[1]:self.__startPoint[1]+self.__width,:] = img_temp
+		
 class Sound(threading.Thread):
 	def __init__(self,track_name):
 		threading.Thread.__init__(self)
