@@ -7,6 +7,7 @@ import numpy as np
 import cv2
 from graphic import *
 import RPi.GPIO as GPIO
+import pygame
 
 if __name__ == '__main__':
 	Set_interrupt.add_attr('gender','m')
@@ -76,7 +77,8 @@ if __name__ == '__main__':
 	def eat_select(cls):
 		#read rfid
 		print "Enter ..."
-		if Set_interrupt.eat_Lock == 1:
+		# if Set_interrupt.eat_Lock == 1:
+		if pygame.mixer.music.get_busy() == False:
 
 			with cls.lock:
 				# GPIO.output(7,1)
@@ -97,12 +99,12 @@ if __name__ == '__main__':
 			with cls.lock:
 				# GPIO.output(7,0)
 				Set_interrupt.eat_Lock = 1
-			print "Exit..."
 			return
 		else:
 			print "In else"
 			return 
 
+		print "Exit..."
 		
 
 	class ReadRfid(threading.Thread):

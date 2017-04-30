@@ -63,5 +63,5 @@ def Non_thr_sond(track_name):
 	pygame.mixer.music.play()
 
 	# while pygame.mixer.music.get_busy() == True and exitFlag == 0:
-	while pygame.mixer.music.get_busy() == True:
-	    continue
+	# while pygame.mixer.music.get_busy() == True:
+	#     continue
