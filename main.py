@@ -95,14 +95,12 @@ if __name__ == '__main__':
 			cls.body.show_illness()
 
 			cls.body.get_bodyShape()
-			time.sleep(1)
+			time.sleep(4)
 			with cls.lock:
 				# GPIO.output(7,0)
 				Set_interrupt.eat_Lock = 1
-			return
 		else:
 			print "In else"
-			return 
 
 		print "Exit..."
 		
