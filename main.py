@@ -320,4 +320,5 @@ if __name__ == '__main__':
 
 	Set_interrupt.add_thread(ReadRfid)
 	Set_interrupt.add_thread(ShowGraphic)
+	Set_interrupt.add_thread(Sound)
 	Set_interrupt.run()
