@@ -75,7 +75,7 @@ if __name__ == '__main__':
 		
 	class ReadRfid():
 		def __init__(self,cls):
-			self.threadID = threadID
+			#self.threadID = threadID
 			self.Klass = cls
 
 		class _chip_select():
@@ -108,7 +108,7 @@ if __name__ == '__main__':
 			self.Klass.RR.MIFAREReader.MFRC522_Init()
 			self.Klass.lock.release()
 			time.sleep(0.1)
-			self.Klass.e.wait()
+			#self.Klass.e.wait()
 
 		def run(self):
 			count = 0
@@ -243,6 +243,7 @@ if __name__ == '__main__':
 				cv2.putText(out,self.dict_text[gender]+"age"+self.dict_text[age],(200,200), self.font, 4,(0,0,0),2,cv2.LINE_AA)
 
 		def run(self):
+			print "grapihc thread"
 			self.Klass.lock.acquire()
 			img = cv2.imread("Template_draft2.png")
 			# dst =np.zeros((480,640,3),dtype = np.uint8)
