@@ -52,7 +52,6 @@ class Energy_Bar(object):
 		self.__maxHeight = maxHeight
 	def create_energy_bar(self,percentage,img):
 		percentage = 1.5 if percentage>1.5 else percentage
-		percentage = 0.01 if percentage<=0 else percentage
 		img_temp = img[self.__startPoint[0] - int(self.__maxHeight*percentage):self.__startPoint[0],self.__startPoint[1]:self.__startPoint[1]+self.__width,:]
 		gradient = self.__lookup[0:int(self.__maxHeight*percentage),0:self.__width,:] 
 		# b,_,_ = cv2.split(img_temp)
