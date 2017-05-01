@@ -77,10 +77,10 @@ if __name__ == "__main__":
 					 [1,1],
 					 [1,1],]
 		hexa.create_Polygon(percenVit,out)
-		bar1.create_bar(1.5,out)
+		bar1.create_bar(0,out)
 		bar2.create_bar(1.5,out)
 		bar3.create_bar(1.5,out)
-		mask = en_bar.create_energy_bar(1.5,out)
+		mask = en_bar.create_energy_bar(0,out)
 
 		cv2.imshow('img',out)
 		k = cv2.waitKey(1)
