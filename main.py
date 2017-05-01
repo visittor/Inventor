@@ -237,6 +237,12 @@ if __name__ == '__main__':
 		class _En_Bar(Energy_Bar):
 			def __init__(self,lookup):
 				Energy_Bar.__init__(self,lookup,(846,750),250,368)
+		class _Header_Text(object):
+			def __init__(self):
+				self.font = cv2.FONT_HERSHEY_SIMPLEX
+				self.dict_text = {"m":"boy","f":"girl","1":"0-6","2":"6-10","3":">10"}
+			def create_text(self,gender,age,out):
+				cv2.putText(out,self.dict_text[gender]+"\tage\t"+self.dict_text[age],(200,200), self.font, 2,(0,0,0),1,cv2.LINE_AA)
 
 		def run(self):
 			self.Klass.lock.acquire()
@@ -250,6 +256,7 @@ if __name__ == '__main__':
 			bar3 = ShowGraphic._Bar3(lookup)
 			hexa = ShowGraphic._Hexagon()
 			en_bar = ShowGraphic._En_Bar(lookup)
+			header_text = ShowGraphic._Header_Text()
 
 			try:
 				self.Klass.e.wait()
@@ -259,18 +266,34 @@ if __name__ == '__main__':
 					food = make_meal(self.Klass.foodlist)
 					#print "I am here",food.protein
 					self.Klass.lock.acquire()
-					percenVit = [[food.vitA/self.Klass.body.AdevitA,food.vitA/self.Klass.body.AdevitA],
-								[food.vitD/self.Klass.body.AdevitD,food.vitD/self.Klass.body.AdevitD],
-								[food.vitE/self.Klass.body.AdevitE,food.vitE/self.Klass.body.AdevitE],
-								[food.vitK/self.Klass.body.AdevitK,food.vitK/self.Klass.body.AdevitK],
-								[food.vitC/self.Klass.body.AdevitC,food.vitC/self.Klass.body.AdevitC],
-								[food.vitB/self.Klass.body.AdevitB,food.vitB/self.Klass.body.AdevitB],]
+					header_text.create_text(self.Klass.gender,self.Klass.age,out)
+
+					# percenVit = [[food.vitA/self.Klass.body.AdevitA,food.vitA/self.Klass.body.AdevitA],
+					# 			[food.vitD/self.Klass.body.AdevitD,food.vitD/self.Klass.body.AdevitD],
+					# 			[food.vitE/self.Klass.body.AdevitE,food.vitE/self.Klass.body.AdevitE],
+					# 			[food.vitK/self.Klass.body.AdevitK,food.vitK/self.Klass.body.AdevitK],
+					# 			[food.vitC/self.Klass.body.AdevitC,food.vitC/self.Klass.body.AdevitC],
+					# 			[food.vitB/self.Klass.body.AdevitB,food.vitB/self.Klass.body.AdevitB],]
+
+					# hexa.create_Polygon(percenVit,out)
+					# bar1.create_bar(food.protein/self.Klass.body.Adeprotein,out)
+					# bar2.create_bar(food.carb/self.Klass.body.Adecarb,out)
+					# bar3.create_bar(food.fat/self.Klass.body.Adefat,out)
+					# en_bar.create_energy_bar(food.energy/self.Klass.body.Adeenergy,out)
+
+					percenVit = [[self.Klass.body.report["vitA"],self.Klass.body.report["vitA"]],
+								[self.Klass.body.report["vitA"],self.Klass.body.report["vitA"]],
+								[self.Klass.body.report["vitA"],self.Klass.body.report["vitA"]],
+								[self.Klass.body.report["vitA"],self.Klass.body.report["vitA"]],
+								[self.Klass.body.report["vitA"],self.Klass.body.report["vitA"]],
+								[self.Klass.body.report["vitA"],self.Klass.body.report["vitA"]],]
 
 					hexa.create_Polygon(percenVit,out)
-					bar1.create_bar(food.protein/self.Klass.body.Adeprotein,out)
-					bar2.create_bar(food.carb/self.Klass.body.Adecarb,out)
-					bar3.create_bar(food.fat/self.Klass.body.Adefat,out)
-					en_bar.create_energy_bar(food.energy/self.Klass.body.Adeenergy,out)
+					bar1.create_bar(self.Klass.body.report["protein"],out)
+					bar2.create_bar(self.Klass.body.report["carb"],out)
+					bar3.create_bar(self.Klass.body.report["fat"],out)
+					en_bar.create_energy_bar(self.Klass.body.report["energy"],out)
+
 					cv2.imshow('img',out)
 					self.Klass.lock.release()
 					k = cv2.waitKey(1)
