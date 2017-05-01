@@ -282,11 +282,11 @@ if __name__ == '__main__':
 					# en_bar.create_energy_bar(food.energy/self.Klass.body.Adeenergy,out)
 
 					percenVit = [[self.Klass.body.report["vitA"],self.Klass.body.report["vitA"]],
-								[self.Klass.body.report["vitA"],self.Klass.body.report["vitA"]],
-								[self.Klass.body.report["vitA"],self.Klass.body.report["vitA"]],
-								[self.Klass.body.report["vitA"],self.Klass.body.report["vitA"]],
-								[self.Klass.body.report["vitA"],self.Klass.body.report["vitA"]],
-								[self.Klass.body.report["vitA"],self.Klass.body.report["vitA"]],]
+								[self.Klass.body.report["vitD"],self.Klass.body.report["vitD"]],
+								[self.Klass.body.report["vitE"],self.Klass.body.report["vitE"]],
+								[self.Klass.body.report["vitK"],self.Klass.body.report["vitK"]],
+								[self.Klass.body.report["vitC"],self.Klass.body.report["vitC"]],
+								[self.Klass.body.report["vitB"],self.Klass.body.report["vitB"]],]
 
 					hexa.create_Polygon(percenVit,out)
 					bar1.create_bar(self.Klass.body.report["protein"],out)
