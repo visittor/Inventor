@@ -33,7 +33,7 @@ if __name__ == '__main__':
 	Set_interrupt.add_attr('emptyconfig',emptyconfig)
 	Set_interrupt.add_attr('foodlist',[Food(**emptyconfig),Food(**emptyconfig),Food(**emptyconfig),Food(**emptyconfig),Food(**emptyconfig)])
 	Set_interrupt.add_attr('bus',BusOut(18,16,12))
-
+	Set_interrupt.add_attr('track_name',None)
 	Set_interrupt.add_attr('eat_Lock',1)
 
 	GPIO.setup(7,GPIO.OUT)
@@ -88,7 +88,6 @@ if __name__ == '__main__':
 			cls.Doctor.diagnose(cls.body)
 
 			cls.body.show_illness()
-
 			cls.body.get_bodyShape()
 			time.sleep(1)
 			# Set_interrupt.eat_Lock = 1
@@ -265,7 +264,7 @@ if __name__ == '__main__':
 					food = make_meal(self.Klass.foodlist)
 					self.Klass.lock.acquire()
 					Text1.create_text(self.Klass.gender,self.Klass.age,out)
-					
+
 					percenVit = [[food.vitA/self.Klass.body.AdevitA,food.vitA/self.Klass.body.AdevitA],
 								[food.vitD/self.Klass.body.AdevitD,food.vitD/self.Klass.body.AdevitD],
 								[food.vitE/self.Klass.body.AdevitE,food.vitE/self.Klass.body.AdevitE],
@@ -303,6 +302,21 @@ if __name__ == '__main__':
 				cv2.destroyAllWindows()
 			finally:
 				cv2.destroyAllWindows()
+	class Sound(threading.Thread):
+		def __init__(self,cls,threadID):
+			threading.Thread.__init__(self)
+			self.threadID = threadID
+			self.Klass = cls
+
+		def run(self):
+			pygame.mixer.init()
+			while self.Klass.e.is_set():
+				if self.Klass.track_name is not None:
+					pygame.mixer.music.load(self.Klass.track_name)
+					pygame.mixer.music.play()
+				while pygame.mixer.music.get_busy() == True:
+				    continue
+				self.Klass.track_name = None
 
 	Set_interrupt.add_thread(ReadRfid)
 	Set_interrupt.add_thread(ShowGraphic)
