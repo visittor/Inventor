@@ -33,7 +33,7 @@ if __name__ == '__main__':
 	Set_interrupt.add_attr('emptyconfig',emptyconfig)
 	Set_interrupt.add_attr('foodlist',[Food(**emptyconfig),Food(**emptyconfig),Food(**emptyconfig),Food(**emptyconfig),Food(**emptyconfig)])
 	Set_interrupt.add_attr('bus',BusOut(18,16,12))
-	Set_interrupt.add_attr('track_name',None)
+	Set_interrupt.add_attr('track_name',[])
 	Set_interrupt.add_attr('eat_Lock',1)
 
 	GPIO.setup(7,GPIO.OUT)
@@ -262,7 +262,7 @@ if __name__ == '__main__':
 					out = img.copy()
 
 					food = make_meal(self.Klass.foodlist)
-					self.Klass.lock.acquire()
+					#self.Klass.lock.acquire()
 					Text1.create_text(self.Klass.gender,self.Klass.age,out)
 
 					percenVit = [[food.vitA/self.Klass.body.AdevitA,food.vitA/self.Klass.body.AdevitA],
@@ -293,7 +293,7 @@ if __name__ == '__main__':
 
 
 					cv2.imshow('img',out)
-					self.Klass.lock.release()
+					#self.Klass.lock.release()
 
 					k = cv2.waitKey(1)
 
@@ -309,14 +309,18 @@ if __name__ == '__main__':
 			self.Klass = cls
 
 		def run(self):
+			self.Klass.lock.acquire()
 			pygame.mixer.init()
+			self.Klass.lock.release()
+			self.Klass.e.wait()
 			while self.Klass.e.is_set():
-				if self.Klass.track_name is not None:
-					pygame.mixer.music.load(self.Klass.track_name)
+				#print self.Klass.track_name
+				if len(self.Klass.track_name)>0:
+					pygame.mixer.music.load(self.Klass.track_name[0])
+					self.Klass.track_name.pop(0)
 					pygame.mixer.music.play()
-				while pygame.mixer.music.get_busy() == True:
-				    continue
-				self.Klass.track_name = None
+					while pygame.mixer.music.get_busy() == True:
+				    		continue
 
 	Set_interrupt.add_thread(ReadRfid)
 	Set_interrupt.add_thread(ShowGraphic)
