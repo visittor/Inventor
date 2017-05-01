@@ -2,6 +2,8 @@ import numpy as np
 import cv2
 import threading
 import pygame
+import subprocess
+import time
 def create_Gradient(size):
 	lookup = np.ones(size,dtype = np.uint8)
 	for i in range(0,size[0]):
@@ -75,10 +77,9 @@ class Sound(threading.Thread):
 		    continue
 
 def Non_thr_sond(track_name):
-	pygame.mixer.init()
-	pygame.mixer.music.load(track_name)
-	pygame.mixer.music.play()
-
+	player = subprocess.Popen(["mplayer",track_name],stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+	time.sleep(3)
+	player.stdin.write("q")
 	# while pygame.mixer.music.get_busy() == True and exitFlag == 0:
 	# while pygame.mixer.music.get_busy() == True:
 	#     continue
