@@ -36,7 +36,8 @@ if __name__ == '__main__':
 
 	Set_interrupt.add_attr('eat_Lock',1)
 
-	# GPIO.setup(7,GPIO.OUT)
+	GPIO.setup(7,GPIO.OUT)
+	GPIO.output(7,0)
 
 	@Set_interrupt(29,GPIO.FALLING)
 	def male_select(cls):
@@ -86,17 +87,19 @@ if __name__ == '__main__':
 			diseas.attack(cls.body)
 
 			cls.Doctor.diagnose(cls.body)
-
+			GPIO.output(7,1)
 			cls.body.show_illness()
-
 			cls.body.get_bodyShape()
-			time.sleep(1)
+			time.sleep(4)
+			GPIO.output(7,0)
 			# Set_interrupt.eat_Lock = 1
 		else:
 			print "In else"
 
 		print "Exit..."
-		
+	Set_interrupt(40,GPIO.FALLING)
+	def fix_bug(cls):
+		print "fix"		
 
 	class ReadRfid(threading.Thread):
 		def __init__(self,cls,threadID):
