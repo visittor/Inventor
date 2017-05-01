@@ -1,5 +1,4 @@
 from symtom import *
-from body_shape import body_shape
 def make_meal(foodList):
 	p = 0
 	c = 0 
@@ -129,7 +128,7 @@ class Body(object):
 		self._AdevitB = float(kwargs['adevitb'])
 
 		self._illness = None
-		self._bodyShape = eval(kwargs['bodyshape'])
+		self._bodyShape = None
 
 		self._report = {"protein":0,"carb":0,"fat":0,"energy":0,"vitA":0,"vitD":0,"vitE":0,"vitK":0,"vitC":0,"vitB":0}
 

@@ -33,10 +33,10 @@ if __name__ == '__main__':
 	Set_interrupt.add_attr('emptyconfig',emptyconfig)
 	Set_interrupt.add_attr('foodlist',[Food(**emptyconfig),Food(**emptyconfig),Food(**emptyconfig),Food(**emptyconfig),Food(**emptyconfig)])
 	Set_interrupt.add_attr('bus',BusOut(18,16,12))
-	Set_interrupt.add_attr('track_name',[])
+
 	Set_interrupt.add_attr('eat_Lock',1)
 
-	GPIO.setup(7,GPIO.OUT)
+	# GPIO.setup(7,GPIO.OUT)
 
 	@Set_interrupt(29,GPIO.FALLING)
 	def male_select(cls):
@@ -72,10 +72,36 @@ if __name__ == '__main__':
 		cls.body = cls.bodyStock.findFromCode(cls.gender+cls.age)[0]
 		print cls.body
 		print "choose 3th age"
+
+	@Set_interrupt(7,GPIO.FALLING)
+	def eat_select(cls):
+		#read rfid
+		print "Enter ..."
+		if Set_interrupt.eat_Lock == 1:
+			# Set_interrupt.eat_Lock = 0
+			meal = make_meal(cls.foodlist)
+			cls.body.eat(meal)
+			print "Eat!!!!"
+			diseas = cls.diseasStock.findFromCode('diseas'+cls.body.report['lack_vit'][-1].lower())[0]
+			diseas.attack(cls.body)
+
+			cls.Doctor.diagnose(cls.body)
+
+			cls.body.show_illness()
+
+			cls.body.get_bodyShape()
+			time.sleep(1)
+			# Set_interrupt.eat_Lock = 1
+		else:
+			print "In else"
+
+		print "Exit..."
 		
-	class ReadRfid():
-		def __init__(self,cls):
-			#self.threadID = threadID
+
+	class ReadRfid(threading.Thread):
+		def __init__(self,cls,threadID):
+			threading.Thread.__init__(self)
+			self.threadID = threadID
 			self.Klass = cls
 
 		class _chip_select():
@@ -93,7 +119,8 @@ if __name__ == '__main__':
 				#self._bus.write(6)
 				self.lock.release()
 				time.sleep(0.1)
-		def init(self):
+
+		def run(self):
 			print "rfid thread"
 			self.Klass.lock.acquire()
 			self.Klass.bus.write(1)
@@ -108,107 +135,81 @@ if __name__ == '__main__':
 			self.Klass.RR.MIFAREReader.MFRC522_Init()
 			self.Klass.lock.release()
 			time.sleep(0.1)
-			#self.Klass.e.wait()
-
-		def run(self):
-			count = 0
-			with ReadRfid._chip_select(self.Klass.bus,0,self.Klass.lock) as cs:
-				uid = self.Klass.RR.get_uid(0.5)
-				# print '1 ',uid
-				if len(uid)>0:
-					food = self.Klass.foodStock.findFromCode(str(uid))
-					if len(food)>0:
-						self.Klass.foodlist[count] = food[0]
+			self.Klass.e.wait()
+			while self.Klass.e.is_set():
+				count = 0
+				with ReadRfid._chip_select(self.Klass.bus,0,self.Klass.lock) as cs:
+					uid = self.Klass.RR.get_uid(0.5)
+					# print '1 ',uid
+					if len(uid)>0:
+						food = self.Klass.foodStock.findFromCode(str(uid))
+						if len(food)>0:
+							self.Klass.foodlist[count] = food[0]
+						else:
+							self.Klass.foodlist[count] = None
+						count += 1
 					else:
 						self.Klass.foodlist[count] = None
-					count += 1
-				else:
-					self.Klass.foodlist[count] = None
-					count += 1
-				#time.sleep(0.1)
-			with ReadRfid._chip_select(self.Klass.bus,1,self.Klass.lock) as cs:
-				uid = self.Klass.RR.get_uid(0.5)
-				# print '2 ',uid
-				if len(uid)>0:
-					food = self.Klass.foodStock.findFromCode(str(uid))
-					if len(food)>0:
-						self.Klass.foodlist[count] = food[0]
+						count += 1
+					#time.sleep(0.1)
+				with ReadRfid._chip_select(self.Klass.bus,1,self.Klass.lock) as cs:
+					uid = self.Klass.RR.get_uid(0.5)
+					# print '2 ',uid
+					if len(uid)>0:
+						food = self.Klass.foodStock.findFromCode(str(uid))
+						if len(food)>0:
+							self.Klass.foodlist[count] = food[0]
+						else:
+							self.Klass.foodlist[count] = None
+						count += 1
 					else:
 						self.Klass.foodlist[count] = None
-					count += 1
-				else:
-					self.Klass.foodlist[count] = None
-					count += 1
-				#time.sleep(0.1)
-			with ReadRfid._chip_select(self.Klass.bus,2,self.Klass.lock) as cs:
-				uid = self.Klass.RR.get_uid(0.5)
-				# print '3 ',uid
-				if len(uid)>0:
-					food = self.Klass.foodStock.findFromCode(str(uid))
-					if len(food)>0:
-						self.Klass.foodlist[count] = food[0]
+						count += 1
+					#time.sleep(0.1)
+				with ReadRfid._chip_select(self.Klass.bus,2,self.Klass.lock) as cs:
+					uid = self.Klass.RR.get_uid(0.5)
+					# print '3 ',uid
+					if len(uid)>0:
+						food = self.Klass.foodStock.findFromCode(str(uid))
+						if len(food)>0:
+							self.Klass.foodlist[count] = food[0]
+						else:
+							self.Klass.foodlist[count] = None
+						count += 1
 					else:
 						self.Klass.foodlist[count] = None
-					count += 1
-				else:
-					self.Klass.foodlist[count] = None
-					count += 1
-				#time.sleep(0.1)
-			with ReadRfid._chip_select(self.Klass.bus,3,self.Klass.lock) as cs:
-				uid = self.Klass.RR.get_uid(0.5)
-				# print '4 ',uid
-				if len(uid)>0:
-					food = self.Klass.foodStock.findFromCode(str(uid))
-					if len(food)>0:
-						self.Klass.foodlist[count] = food[0]
+						count += 1
+					#time.sleep(0.1)
+				with ReadRfid._chip_select(self.Klass.bus,3,self.Klass.lock) as cs:
+					uid = self.Klass.RR.get_uid(0.5)
+					# print '4 ',uid
+					if len(uid)>0:
+						food = self.Klass.foodStock.findFromCode(str(uid))
+						if len(food)>0:
+							self.Klass.foodlist[count] = food[0]
+						else:
+							self.Klass.foodlist[count] = None
+						count += 1
 					else:
 						self.Klass.foodlist[count] = None
-					count += 1
-				else:
-					self.Klass.foodlist[count] = None
-					count += 1
-				#time.sleep(0.1)
-			with ReadRfid._chip_select(self.Klass.bus,4,self.Klass.lock) as cs:
-				uid = self.Klass.RR.get_uid(0.5)
-				# print '5 ',uid
-				if len(uid)>0:
-					food = self.Klass.foodStock.findFromCode(str(uid))
-					if len(food)>0:
-						self.Klass.foodlist[count] = food[0]
+						count += 1
+					#time.sleep(0.1)
+				with ReadRfid._chip_select(self.Klass.bus,4,self.Klass.lock) as cs:
+					uid = self.Klass.RR.get_uid(0.5)
+					# print '5 ',uid
+					if len(uid)>0:
+						food = self.Klass.foodStock.findFromCode(str(uid))
+						if len(food)>0:
+							self.Klass.foodlist[count] = food[0]
+						else:
+							self.Klass.foodlist[count] = None
+						count += 1
 					else:
 						self.Klass.foodlist[count] = None
-					count += 1
-				else:
-					self.Klass.foodlist[count] = None
-					count += 1
-				#time.sleep(0.1)
-			# print "/////////////////"
-	read_rf = ReadRfid(Set_interrupt)
-	read_rf.init()
-	
-	@Set_interrupt(32,GPIO.FALLING)
-	def eat_select(cls):
-		#read rfid
-		print "Enter ..."
-		if Set_interrupt.eat_Lock == 1:
-			# Set_interrupt.eat_Lock = 0
-			read_rf.run()
-			meal = make_meal(cls.foodlist)
-			cls.body.eat(meal)
-			print "Eat!!!!"
-			diseas = cls.diseasStock.findFromCode('diseas'+cls.body.report['lack_vit'][-1].lower())[0]
-			diseas.attack(cls.body)
-
-			cls.Doctor.diagnose(cls.body)
-
-			cls.body.show_illness()
-			cls.body.get_bodyShape()
-			time.sleep(1)
-			# Set_interrupt.eat_Lock = 1
-		else:
-			print "In else"
-		print "Exit..."
-
+						count += 1
+					#time.sleep(0.1)
+				# print "/////////////////"
+			
 	class ShowGraphic(threading.Thread):
 		def __init__(self,cls,threadID):
 			threading.Thread.__init__(self)
@@ -236,15 +237,8 @@ if __name__ == '__main__':
 		class _En_Bar(Energy_Bar):
 			def __init__(self,lookup):
 				Energy_Bar.__init__(self,lookup,(846,750),250,368)
-		class _text():
-			def __init__(self):
-				self.font = cv2.FONT_HERSHEY_SIMPLEX
-				self.dict_text = {"m":"boy","f":"girl","1":"0-6","2":"6-10","3":">10"}
-			def create_text(self,gender,age,out):
-				cv2.putText(out,self.dict_text[gender]+"age"+self.dict_text[age],(200,200), self.font, 4,(0,0,0),2,cv2.LINE_AA)
 
 		def run(self):
-			print "grapihc thread"
 			self.Klass.lock.acquire()
 			img = cv2.imread("Template_draft2.png")
 			# dst =np.zeros((480,640,3),dtype = np.uint8)
@@ -256,46 +250,29 @@ if __name__ == '__main__':
 			bar3 = ShowGraphic._Bar3(lookup)
 			hexa = ShowGraphic._Hexagon()
 			en_bar = ShowGraphic._En_Bar(lookup)
-			Text1 = ShowGraphic._text()
+
 			try:
 				self.Klass.e.wait()
 				while self.Klass.e.is_set():
 					out = img.copy()
 
 					food = make_meal(self.Klass.foodlist)
-					#self.Klass.lock.acquire()
-					Text1.create_text(self.Klass.gender,self.Klass.age,out)
-
-					# percenVit = [[food.vitA/self.Klass.body.AdevitA,food.vitA/self.Klass.body.AdevitA],
-					# 			[food.vitD/self.Klass.body.AdevitD,food.vitD/self.Klass.body.AdevitD],
-					# 			[food.vitE/self.Klass.body.AdevitE,food.vitE/self.Klass.body.AdevitE],
-					# 			[food.vitK/self.Klass.body.AdevitK,food.vitK/self.Klass.body.AdevitK],
-					# 			[food.vitC/self.Klass.body.AdevitC,food.vitC/self.Klass.body.AdevitC],
-					# 			[food.vitB/self.Klass.body.AdevitB,food.vitB/self.Klass.body.AdevitB],]
-
-					# hexa.create_Polygon(percenVit,out)
-					# bar1.create_bar(food.protein/self.Klass.body.Adeprotein,out)
-					# bar2.create_bar(food.carb/self.Klass.body.Adecarb,out)
-					# bar3.create_bar(food.fat/self.Klass.body.Adefat,out)
-					# en_bar.create_energy_bar(food.energy/self.Klass.body.Adeenergy,out)
-
-					percenVit = [[self.Klass.body.report["vitA"],self.Klass.body.report["vitA"]],
-								[self.Klass.body.report["vitD"],self.Klass.body.report["vitD"]],
-								[self.Klass.body.report["vitE"],self.Klass.body.report["vitE"]],
-								[self.Klass.body.report["vitK"],self.Klass.body.report["vitK"]],
-								[self.Klass.body.report["vitC"],self.Klass.body.report["vitC"]],
-								[self.Klass.body.report["vitB"],self.Klass.body.report["vitB"]],]
+					#print "I am here",food.protein
+					self.Klass.lock.acquire()
+					percenVit = [[food.vitA/self.Klass.body.AdevitA,food.vitA/self.Klass.body.AdevitA],
+								[food.vitD/self.Klass.body.AdevitD,food.vitD/self.Klass.body.AdevitD],
+								[food.vitE/self.Klass.body.AdevitE,food.vitE/self.Klass.body.AdevitE],
+								[food.vitK/self.Klass.body.AdevitK,food.vitK/self.Klass.body.AdevitK],
+								[food.vitC/self.Klass.body.AdevitC,food.vitC/self.Klass.body.AdevitC],
+								[food.vitB/self.Klass.body.AdevitB,food.vitB/self.Klass.body.AdevitB],]
 
 					hexa.create_Polygon(percenVit,out)
-					bar1.create_bar(self.Klass.body.report["protein"],out)
-					bar2.create_bar(self.Klass.body.report["carb"],out)
-					bar3.create_bar(self.Klass.body.report["fat"],out)
-					en_bar.create_energy_bar(self.Klass.body.report["energy"],out)
-
-
+					bar1.create_bar(food.protein/self.Klass.body.Adeprotein,out)
+					bar2.create_bar(food.carb/self.Klass.body.Adecarb,out)
+					bar3.create_bar(food.fat/self.Klass.body.Adefat,out)
+					en_bar.create_energy_bar(food.energy/self.Klass.body.Adeenergy,out)
 					cv2.imshow('img',out)
-					#self.Klass.lock.release()
-
+					self.Klass.lock.release()
 					k = cv2.waitKey(1)
 
 				cv2.destroyAllWindows()
@@ -303,27 +280,7 @@ if __name__ == '__main__':
 				cv2.destroyAllWindows()
 			finally:
 				cv2.destroyAllWindows()
-	class Sound(threading.Thread):
-		def __init__(self,cls,threadID):
-			threading.Thread.__init__(self)
-			self.threadID = threadID
-			self.Klass = cls
 
-		def run(self):
-			self.Klass.lock.acquire()
-			pygame.mixer.init()
-			self.Klass.lock.release()
-			self.Klass.e.wait()
-			while self.Klass.e.is_set():
-				#print self.Klass.track_name
-				if len(self.Klass.track_name)>0:
-					pygame.mixer.music.load(self.Klass.track_name[0])
-					self.Klass.track_name.pop(0)
-					pygame.mixer.music.play()
-					while pygame.mixer.music.get_busy() == True:
-				    		continue
-
-	# Set_interrupt.add_thread(ReadRfid)
+	Set_interrupt.add_thread(ReadRfid)
 	Set_interrupt.add_thread(ShowGraphic)
-	Set_interrupt.add_thread(Sound)
 	Set_interrupt.run()

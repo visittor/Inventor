@@ -60,6 +60,19 @@ class Energy_Bar(object):
 		bit_or = cv2.bitwise_or(img_temp.copy(),gradient,mask = mask[:,:,0])
 		img_temp = cv2.bitwise_or(img_temp,bit_or)
 		img[self.__startPoint[0] - int(self.__maxHeight*percentage):self.__startPoint[0],self.__startPoint[1]:self.__startPoint[1]+self.__width,:] = img_temp
+		
+class Sound(threading.Thread):
+	def __init__(self,track_name):
+		threading.Thread.__init__(self)
+		self.track_name = track_name
+
+	def run(self):
+		pygame.mixer.init()
+		pygame.mixer.music.load(self.track_name)
+		pygame.mixer.music.play()
+
+		while pygame.mixer.music.get_busy() == True:
+		    continue
 
 def Non_thr_sond(track_name):
 	pygame.mixer.init()

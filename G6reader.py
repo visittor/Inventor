@@ -11,22 +11,20 @@ class Read_RFID:
 		self.MIFAREReader = MFRC522.MFRC522()
 
 	def get_uid(self,to=0):
-		#print 'Waiting for RFIDtag'
+		print 'Waiting for RFIDtag'
 		# return uid in RFID
 		rfid_uid = []
 		# rfid_uid = [128,15,177,88]
 		hex_uid = ''
 		t = time.clock()
 		if to != 0:
-			pass
-			#print 'Set timeout to',to,'sec' 
+			print 'Set timeout to',to,'sec' 
 
 		while True:
 			(status,TagType) = self.MIFAREReader.MFRC522_Request(self.MIFAREReader.PICC_REQIDL)
 			# If a card is found
 			if status == self.MIFAREReader.MI_OK:
-				pass
-				#print "RFIDtag detected"
+				print "RFIDtag detected"
             # Get the UID of the card
 			(status,uid) = self.MIFAREReader.MFRC522_Anticoll()
             # If we have the UID, continue
@@ -34,7 +32,7 @@ class Read_RFID:
 				rfid_uid = uid
 				break
 			if time.clock()-t >= to and to != 0:
-				#print 'Reached timeout',to,'sec'
+				print 'Reached timeout',to,'sec'
 				break
 			#else:
 				#print "I don't get UID"
