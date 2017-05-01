@@ -73,7 +73,7 @@ if __name__ == '__main__':
 		print cls.body
 		print "choose 3th age"
 
-	@Set_interrupt(7,GPIO.FALLING)
+	@Set_interrupt(32,GPIO.FALLING)
 	def eat_select(cls):
 		#read rfid
 		print "Enter ..."
