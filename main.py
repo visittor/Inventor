@@ -185,6 +185,7 @@ if __name__ == '__main__':
 			# print "/////////////////"
 	read_rf = ReadRfid(Set_interrupt)
 	read_rf.init()
+	
 	@Set_interrupt(32,GPIO.FALLING)
 	def eat_select(cls):
 		#read rfid
