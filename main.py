@@ -36,7 +36,7 @@ if __name__ == '__main__':
 
 	Set_interrupt.add_attr('eat_Lock',1)
 
-	# GPIO.setup(7,GPIO.OUT)
+	GPIO.setup(7,GPIO.OUT)
 
 	@Set_interrupt(29,GPIO.FALLING)
 	def male_select(cls):
@@ -73,7 +73,7 @@ if __name__ == '__main__':
 		print cls.body
 		print "choose 3th age"
 
-	@Set_interrupt(7,GPIO.FALLING)
+	@Set_interrupt(32,GPIO.FALLING)
 	def eat_select(cls):
 		#read rfid
 		print "Enter ..."
@@ -237,6 +237,12 @@ if __name__ == '__main__':
 		class _En_Bar(Energy_Bar):
 			def __init__(self,lookup):
 				Energy_Bar.__init__(self,lookup,(846,750),250,368)
+		class _text():
+			def __init__(self):
+				self.font = cv2.FONT_HERSHEY_SIMPLEX
+				self.dict_text = {"m":"boy","f":"girl","1":"0-6","2":"6-10","3":">10"}
+			def create_text(self,gender,age,out):
+				cv2.putText(out,self.dict_text[gender]+"age"+self.dict_text[age],(200,200), self.font, 4,(0,0,0),2,cv2.LINE_AA)
 
 		def run(self):
 			self.Klass.lock.acquire()
@@ -250,15 +256,16 @@ if __name__ == '__main__':
 			bar3 = ShowGraphic._Bar3(lookup)
 			hexa = ShowGraphic._Hexagon()
 			en_bar = ShowGraphic._En_Bar(lookup)
-
+			Text1 = ShowGraphic._text()
 			try:
 				self.Klass.e.wait()
 				while self.Klass.e.is_set():
 					out = img.copy()
 
 					food = make_meal(self.Klass.foodlist)
-					#print "I am here",food.protein
 					self.Klass.lock.acquire()
+					Text1.create_text(self.Klass.gender,self.Klass.age,out)
+					
 					percenVit = [[food.vitA/self.Klass.body.AdevitA,food.vitA/self.Klass.body.AdevitA],
 								[food.vitD/self.Klass.body.AdevitD,food.vitD/self.Klass.body.AdevitD],
 								[food.vitE/self.Klass.body.AdevitE,food.vitE/self.Klass.body.AdevitE],
@@ -271,8 +278,24 @@ if __name__ == '__main__':
 					bar2.create_bar(food.carb/self.Klass.body.Adecarb,out)
 					bar3.create_bar(food.fat/self.Klass.body.Adefat,out)
 					en_bar.create_energy_bar(food.energy/self.Klass.body.Adeenergy,out)
+
+					# percenVit = [[self.Klass.body.report["vitA"],self.Klass.body.report["vitA"]],
+					# 			[self.Klass.body.report["vitD"],self.Klass.body.report["vitD"]],
+					# 			[self.Klass.body.report["vitE"],self.Klass.body.report["vitE"]],
+					# 			[self.Klass.body.report["vitK"],self.Klass.body.report["vitK"]],
+					# 			[self.Klass.body.report["vitC"],self.Klass.body.report["vitC"]],
+					# 			[self.Klass.body.report["vitB"],self.Klass.body.report["vitB"]],]
+
+					# hexa.create_Polygon(percenVit,out)
+					# bar1.create_bar(self.Klass.body.report["protein"],out)
+					# bar2.create_bar(self.Klass.body.report["carb"],out)
+					# bar3.create_bar(self.Klass.body.report["fat"],out)
+					# en_bar.create_energy_bar(self.Klass.body.report["energy"],out)
+
+
 					cv2.imshow('img',out)
 					self.Klass.lock.release()
+
 					k = cv2.waitKey(1)
 
 				cv2.destroyAllWindows()
