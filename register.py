@@ -78,7 +78,7 @@ with open("raw_data2.txt",'r') as f:
 
 parser =SafeConfigParser()
 RR = Read_RFID()
-count = 43
+count = 1
 for i in data:
 	option = i.split("\t")
 	if len(option) == 11:
