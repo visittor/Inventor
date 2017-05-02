@@ -83,7 +83,7 @@ for i in data:
 	option = i.split("\t")
 	if len(option) == 11:
 		sec_name = 'Food'+str(count)
-		print sec_name," enter to confirm"
+		print sec_name," enter to confirm name: ",option[0]
 		raw_input()
 		try:
 			parser.add_section(sec_name)
