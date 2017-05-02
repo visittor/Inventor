@@ -71,20 +71,23 @@ import RPi.GPIO as GPIO
 # GPIO.cleanup()
 # print "[OK]"
 
-with open("raw_data.txt",'r') as f:
+with open("raw_data2.txt",'r') as f:
 	data = []
 	for line in f:
 		data.append(line.strip("\n"))
 
 parser =SafeConfigParser()
 RR = Read_RFID()
-count = 1
+count = 43
 for i in data:
 	option = i.split("\t")
 	if len(option) == 11:
 		sec_name = 'Food'+str(count)
+		print sec_name," enter to confirm"
+		raw_input()
 		try:
 			parser.add_section(sec_name)
+			print "wait for rfid"
 			uid = RR.get_uid()
 			parser.set(sec_name,'code',str(uid))
 			parser.set(sec_name,'name',option[0])
@@ -100,6 +103,7 @@ for i in data:
 			parser.set(sec_name,'vitB',option[9])
 			print "name",option[0],"--->",str(uid)
 		except DuplicateSectionError:
+			print "Already have ",sec_name," waiting for rfid\n"
 			uid = RR.get_uid()
 			parser.set(sec_name,'code',str(uid))
 			parser.set(sec_name,'name',option[0])
@@ -116,7 +120,7 @@ for i in data:
 			print "name",option[0],"--->",str(uid)
 	count += 1
 
-with open("config.ini","a") as f:
+with open("config.ini","w") as f:
 	parser.write(f)
 GPIO.cleanup()
 print "[OK]"
