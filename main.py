@@ -33,9 +33,8 @@ if __name__ == '__main__':
 	Set_interrupt.add_attr('emptyconfig',emptyconfig)
 	Set_interrupt.add_attr('foodlist',[Food(**emptyconfig),Food(**emptyconfig),Food(**emptyconfig),Food(**emptyconfig),Food(**emptyconfig)])
 	Set_interrupt.add_attr('bus',BusOut(18,16,12))
-
 	Set_interrupt.add_attr('eat_Lock',1)
-
+	Set_interrupt.add_attr('play_list',[])
 	GPIO.setup(7,GPIO.OUT)
 	GPIO.output(7,0)
 
@@ -87,9 +86,6 @@ if __name__ == '__main__':
 
 			cls.Doctor.diagnose(cls.body)
 			cls.body.show_illness()
-			begin = 0
-			while begin < 3000000:
-				begin += 1
 			#player = subprocess.Popen(["omxplayer","-o","local","Sound/Vit_K.mp3"],stdin = subprocess.PIPE,stdout = subprocess.PIPE,stderr = subprocess.PIPE)
 			#player.stdin.write("q")
 			#time.sleep(3)
@@ -307,6 +303,20 @@ if __name__ == '__main__':
 				cv2.destroyAllWindows()
 			finally:
 				cv2.destroyAllWindows()
+	class Sound_quene(threading.Thread):
+		def __init__(self,cls,threadID):
+			threading.Thread.__init__(self)
+			self.threadID = threadID
+			self.Klass = cls
+
+		def run(self):
+			print "Sound_quene start"
+			self.Klass.e.wait()
+			while self.Klass.e.is_set():
+				if len(self.Klass.play_list) > 0:
+					Non_thr_sond(self.Klass.play_list[0])
+					self.Klass.play_list.pop(0)
+				time.sleep(0.1)
 
 	Set_interrupt.add_thread(ReadRfid)
 	Set_interrupt.add_thread(ShowGraphic)
