@@ -8,7 +8,7 @@ import cv2
 from graphic import *
 import RPi.GPIO as GPIO
 import pygame
-
+import subprocess
 if __name__ == '__main__':
 	Set_interrupt.add_attr('gender','m')
 	Set_interrupt.add_attr('age','1')
@@ -59,7 +59,7 @@ if __name__ == '__main__':
 		cls.body = cls.bodyStock.findFromCode(cls.gender+cls.age)[0]
 		print cls.body
 		print "choose 1st age"
-
+		#player = subprocess.Popen(["mplayer","Sound/Vit_K.mp3"],stdin = subprocess.PIPE,stdout = subprocess.PIPE,stderr = subprocess.PIPE)
 	@Set_interrupt(35,GPIO.FALLING)
 	def age2_select(cls):
 		cls.age = '2'
@@ -79,7 +79,6 @@ if __name__ == '__main__':
 		#read rfid
 		print "Enter ..."
 		if Set_interrupt.eat_Lock == 1:
-			# Set_interrupt.eat_Lock = 0
 			meal = make_meal(cls.foodlist)
 			cls.body.eat(meal)
 			print "Eat!!!!"
@@ -87,12 +86,14 @@ if __name__ == '__main__':
 			diseas.attack(cls.body)
 
 			cls.Doctor.diagnose(cls.body)
-			GPIO.output(7,1)
 			cls.body.show_illness()
+			begin = 0
+			while begin < 3000000:
+				begin += 1
+			#player = subprocess.Popen(["omxplayer","-o","local","Sound/Vit_K.mp3"],stdin = subprocess.PIPE,stdout = subprocess.PIPE,stderr = subprocess.PIPE)
+			#player.stdin.write("q")
+			#time.sleep(3)
 			cls.body.get_bodyShape()
-			time.sleep(4)
-			GPIO.output(7,0)
-			# Set_interrupt.eat_Lock = 1
 		else:
 			print "In else"
 
