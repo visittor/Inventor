@@ -121,7 +121,7 @@ if __name__ == '__main__':
 				time.sleep(0.1)
 
 		def run(self):
-			print "rfid thread"
+			print "Enter rfid thread"
 			self.Klass.lock.acquire()
 			self.Klass.bus.write(1)
 			self.Klass.RR.MIFAREReader.MFRC522_Init()
@@ -208,7 +208,7 @@ if __name__ == '__main__':
 						self.Klass.foodlist[count] = None
 						count += 1
 					#time.sleep(0.1)
-				# print "/////////////////"
+			print "Exit rfid thread"
 			
 	class ShowGraphic(threading.Thread):
 		def __init__(self,cls,threadID):
@@ -245,6 +245,7 @@ if __name__ == '__main__':
 				cv2.putText(out,self.dict_text[gender]+"\tage\t"+self.dict_text[age],(200,200), self.font, 2,(0,0,0),1,cv2.LINE_AA)
 
 		def run(self):
+			print "Enter graphic thread"
 			self.Klass.lock.acquire()
 			img = cv2.imread("Template_draft2.png")
 			# dst =np.zeros((480,640,3),dtype = np.uint8)
@@ -299,8 +300,10 @@ if __name__ == '__main__':
 					k = cv2.waitKey(1)
 
 				cv2.destroyAllWindows()
+				print "Exit graphic thread"
 			except KeyboardInterrupt:
 				cv2.destroyAllWindows()
+				print "Exit graphic thread"
 			finally:
 				cv2.destroyAllWindows()
 	class Sound_quene(threading.Thread):
@@ -310,14 +313,16 @@ if __name__ == '__main__':
 			self.Klass = cls
 
 		def run(self):
-			print "Sound_quene start"
+			print "Enter Sound_quene"
 			self.Klass.e.wait()
 			while self.Klass.e.is_set():
 				if len(self.Klass.play_list) > 0:
 					Non_thr_sond(self.Klass.play_list[0])
 					self.Klass.play_list.pop(0)
 				time.sleep(0.1)
+			print "Exit Sound_quene"
 
 	Set_interrupt.add_thread(ReadRfid)
 	Set_interrupt.add_thread(ShowGraphic)
+	Set_interrupt.add_thread(Sound_quene)
 	Set_interrupt.run()
