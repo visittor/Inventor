@@ -36,8 +36,6 @@ if __name__ == '__main__':
 	Set_interrupt.add_attr('eat_Lock',1)
 	Set_interrupt.add_attr('play_list',[])
 	GPIO.setup(7,GPIO.OUT)
-	GPIO.output(7,0)
-
 	@Set_interrupt(29,GPIO.FALLING)
 	def male_select(cls):
 		cls.gender = 'm'
@@ -86,17 +84,11 @@ if __name__ == '__main__':
 
 			cls.Doctor.diagnose(cls.body)
 			cls.body.show_illness()
-			#player = subprocess.Popen(["omxplayer","-o","local","Sound/Vit_K.mp3"],stdin = subprocess.PIPE,stdout = subprocess.PIPE,stderr = subprocess.PIPE)
-			#player.stdin.write("q")
-			#time.sleep(3)
 			cls.body.get_bodyShape()
 		else:
 			print "In else"
 
-		print "Exit..."
-	Set_interrupt(40,GPIO.FALLING)
-	def fix_bug(cls):
-		print "fix"		
+		print "Exit..."	
 
 	class ReadRfid(threading.Thread):
 		def __init__(self,cls,threadID):
@@ -111,12 +103,9 @@ if __name__ == '__main__':
 				self.lock = lock
 			def __enter__(self):
 				self.lock.acquire()
-				#print'Enter read card number',self._value
 				self._bus.write(self._value)
 		
 			def __exit__(self,type,value,traceback):
-				#print'Finish read card number',self._value
-				#self._bus.write(6)
 				self.lock.release()
 				time.sleep(0.1)
 
@@ -140,7 +129,6 @@ if __name__ == '__main__':
 				count = 0
 				with ReadRfid._chip_select(self.Klass.bus,0,self.Klass.lock) as cs:
 					uid = self.Klass.RR.get_uid(0.5)
-					# print '1 ',uid
 					if len(uid)>0:
 						food = self.Klass.foodStock.findFromCode(str(uid))
 						if len(food)>0:
@@ -151,7 +139,6 @@ if __name__ == '__main__':
 					else:
 						self.Klass.foodlist[count] = None
 						count += 1
-					#time.sleep(0.1)
 				with ReadRfid._chip_select(self.Klass.bus,1,self.Klass.lock) as cs:
 					uid = self.Klass.RR.get_uid(0.5)
 					# print '2 ',uid
@@ -179,10 +166,8 @@ if __name__ == '__main__':
 					else:
 						self.Klass.foodlist[count] = None
 						count += 1
-					#time.sleep(0.1)
 				with ReadRfid._chip_select(self.Klass.bus,3,self.Klass.lock) as cs:
 					uid = self.Klass.RR.get_uid(0.5)
-					# print '4 ',uid
 					if len(uid)>0:
 						food = self.Klass.foodStock.findFromCode(str(uid))
 						if len(food)>0:
@@ -193,10 +178,8 @@ if __name__ == '__main__':
 					else:
 						self.Klass.foodlist[count] = None
 						count += 1
-					#time.sleep(0.1)
 				with ReadRfid._chip_select(self.Klass.bus,4,self.Klass.lock) as cs:
 					uid = self.Klass.RR.get_uid(0.5)
-					# print '5 ',uid
 					if len(uid)>0:
 						food = self.Klass.foodStock.findFromCode(str(uid))
 						if len(food)>0:
@@ -207,7 +190,6 @@ if __name__ == '__main__':
 					else:
 						self.Klass.foodlist[count] = None
 						count += 1
-					#time.sleep(0.1)
 			print "Exit rfid thread"
 			
 	class ShowGraphic(threading.Thread):

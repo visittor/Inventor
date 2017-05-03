@@ -54,18 +54,24 @@ class Set_interrupt(object):
 
 	@classmethod
 	def run(cls):
-		for i in cls.threads:
-			i.start()
-		cls.e.set()
-		while 1 == 1:
-			k = raw_input("k to kill program: ")
-			if k == 'k':
-				cls.e.clear()
-				break
+		try:
+			for i in cls.threads:
+				i.start()
+			cls.e.set()
+			while 1 == 1:
+				k = raw_input("k to kill program: ")
+				if k == 'k':
+					cls.e.clear()
+					break
 
-		for i in cls.threads:
-			i.join()
-		GPIO.cleanup()
+			for i in cls.threads:
+				i.join()
+			GPIO.cleanup()
+		except Exception as e:
+			print e
+			GPIO.cleanup()
+		finally:
+			GPIO.cleanup()
 
 
 
