@@ -328,7 +328,7 @@ if __name__ == '__main__':
 			self.Klass.e.wait()
 			while self.Klass.e.is_set():
 				if len(self.Klass.play_list) > 0:
-					Non_thr_sond(self.Klass.play_list[0][0],time = self.Klass.play_list[0][1])
+					Non_thr_sond(self.Klass.play_list[0][0],time_play = self.Klass.play_list[0][1])
 					self.Klass.play_list.pop(0)
 				time.sleep(0.1)
 			print "Exit Sound_quene"

@@ -11,5 +11,5 @@ def body_shape(report):
 		print "I'm thin"
 		GPIO.output(7,1)
 	else:
-		Set_interrupt.play_list.append(["Sound/food_ok.mp3"])
+		Set_interrupt.play_list.append(["Sound/food_ok.mp3",3])
 		GPIO.output(7,1)
