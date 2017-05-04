@@ -35,11 +35,19 @@ if __name__ == '__main__':
 	Set_interrupt.add_attr('bus',BusOut(18,16,12))
 	Set_interrupt.add_attr('eat_Lock',1)
 	Set_interrupt.add_attr('play_list',[])
+
+	Set_interrupt.add_attr('gender_age_flag',{"age":1,"gender":1})
 	GPIO.setup(7,GPIO.OUT)
+	GPIO.output(7,1)
 	@Set_interrupt(29,GPIO.FALLING)
 	def male_select(cls):
 		cls.gender = 'm'
 		cls.body = cls.bodyStock.findFromCode(cls.gender+cls.age)[0]
+		cls.gender_age_flag["gender"] = 0
+		if cls.gender_age_flag["age"]:
+			cls.play_list.append(["Sound/choose_age.mp3",2])
+		else:
+			cls.play_list.append(["Sound/choose_card.mp3",4])
 		print cls.body
 		print "choose male"
 
@@ -47,6 +55,11 @@ if __name__ == '__main__':
 	def female_select(cls):
 		cls.gender = 'f'
 		cls.body = cls.bodyStock.findFromCode(cls.gender+cls.age)[0]
+		cls.gender_age_flag["gender"] = 0
+		if cls.gender_age_flag["age"]:
+			cls.play_list.append(["Sound/choose_age.mp3",2])
+		else:
+			cls.play_list.append(["Sound/choose_card.mp3",4])
 		print cls.body
 		print "choose female"
 
@@ -54,6 +67,11 @@ if __name__ == '__main__':
 	def age1_select(cls):
 		cls.age = '1'
 		cls.body = cls.bodyStock.findFromCode(cls.gender+cls.age)[0]
+		cls.gender_age_flag["age"] = 0
+		if cls.gender_age_flag["gender"]:
+			cls.play_list.append(["Sound/choose_gender.mp3",2])
+		else:
+			cls.play_list.append(["Sound/choose_card.mp3",4])
 		print cls.body
 		print "choose 1st age"
 		#player = subprocess.Popen(["mplayer","Sound/Vit_K.mp3"],stdin = subprocess.PIPE,stdout = subprocess.PIPE,stderr = subprocess.PIPE)
@@ -61,6 +79,11 @@ if __name__ == '__main__':
 	def age2_select(cls):
 		cls.age = '2'
 		cls.body = cls.bodyStock.findFromCode(cls.gender+cls.age)[0]
+		cls.gender_age_flag["age"] = 0
+		if cls.gender_age_flag["gender"]:
+			cls.play_list.append(["Sound/choose_gender.mp3",2])
+		else:
+			cls.play_list.append(["Sound/choose_card.mp3",4])
 		print cls.body
 		print "choose 2nd age"
 
@@ -68,6 +91,12 @@ if __name__ == '__main__':
 	def age3_select(cls):
 		cls.age = '3'
 		cls.body = cls.bodyStock.findFromCode(cls.gender+cls.age)[0]
+		cls.gender_age_flag["age"] = 0
+		if cls.gender_age_flag["gender"]:
+			cls.play_list.append(["Sound/choose_gender.mp3",2])
+		else:
+			cls.play_list.append(["Sound/choose_card.mp3",4])
+		cls.gender_time_choose = time.time()
 		print cls.body
 		print "choose 3th age"
 
@@ -75,18 +104,18 @@ if __name__ == '__main__':
 	def eat_select(cls):
 		#read rfid
 		print "Enter ..."
-		if Set_interrupt.eat_Lock == 1:
-			meal = make_meal(cls.foodlist)
-			cls.body.eat(meal)
-			print "Eat!!!!"
-			diseas = cls.diseasStock.findFromCode('diseas'+cls.body.report['lack_vit'][-1].lower())[0]
-			diseas.attack(cls.body)
+		cls.gender_age_flag["age"] = 1
+		cls.gender_age_flag["gender"] = 1
 
-			cls.Doctor.diagnose(cls.body)
-			cls.body.show_illness()
-			cls.body.get_bodyShape()
-		else:
-			print "In else"
+		meal = make_meal(cls.foodlist)
+		cls.body.eat(meal)
+		print "Eat!!!!"
+		diseas = cls.diseasStock.findFromCode('diseas'+cls.body.report['lack_vit'][-1].lower())[0]
+		diseas.attack(cls.body)
+
+		cls.Doctor.diagnose(cls.body)
+		cls.body.show_illness()
+		cls.body.get_bodyShape()
 
 		print "Exit..."	
 
@@ -299,7 +328,7 @@ if __name__ == '__main__':
 			self.Klass.e.wait()
 			while self.Klass.e.is_set():
 				if len(self.Klass.play_list) > 0:
-					Non_thr_sond(self.Klass.play_list[0])
+					Non_thr_sond(self.Klass.play_list[0][0],time = self.Klass.play_list[0][1])
 					self.Klass.play_list.pop(0)
 				time.sleep(0.1)
 			print "Exit Sound_quene"

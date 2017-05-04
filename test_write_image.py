@@ -39,10 +39,10 @@ class Bar3(Bar):
 		pass
 class Hexagon(Polygon):
 	def __init__(self):
-		Polygon.__init__(self,[1353,684],[[1308,596],[1397,596],[1441,685],[1397,773],[1309,773],[1264,684]])
+		Polygon.__init__(self,[1357,700],[[1357,594],[1458,666],[1420,785],[1294,787	],[1257,666]])
 class En_Bar(Energy_Bar):
 	def __init__(self,lookup):
-		Energy_Bar.__init__(self,lookup,(846,750),250,368)
+		Energy_Bar.__init__(self,lookup,(846,750),250,387)
 """main here(test)"""
 #############################################################################################################################################################################################
 if __name__ == "__main__":
@@ -70,8 +70,7 @@ if __name__ == "__main__":
 	while True:
 		out = img.copy()
 
-		percenVit = [[1.5,1.5],
-					 [1,1],
+		percenVit = [[1,1],
 					 [1,1],
 					 [1,1],
 					 [1,1],
@@ -80,7 +79,7 @@ if __name__ == "__main__":
 		bar1.create_bar(0,out)
 		bar2.create_bar(1.5,out)
 		bar3.create_bar(1.5,out)
-		mask = en_bar.create_energy_bar(0,out)
+		mask = en_bar.create_energy_bar(1.5,out)
 
 		cv2.imshow('img',out)
 		k = cv2.waitKey(1)

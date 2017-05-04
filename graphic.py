@@ -60,8 +60,10 @@ class Energy_Bar(object):
 		# b,_,_ = cv2.split(img_temp)
 		_,mask = cv2.threshold(img_temp,127,255,cv2.THRESH_BINARY_INV)
 		bit_or = cv2.bitwise_or(img_temp.copy(),gradient,mask = mask[:,:,0])
-		img_temp = cv2.bitwise_or(img_temp,bit_or)
+		img_temp = cv2.bitwise_or(img_temp.copy(),bit_or)
+		# img_temp = cv2.bitwise_or(img_temp,bit_or)
 		img[self.__startPoint[0] - int(self.__maxHeight*percentage):self.__startPoint[0],self.__startPoint[1]:self.__startPoint[1]+self.__width,:] = img_temp
+
 		
 class Sound(threading.Thread):
 	def __init__(self,track_name):
@@ -76,9 +78,9 @@ class Sound(threading.Thread):
 		while pygame.mixer.music.get_busy() == True:
 		    continue
 
-def Non_thr_sond(track_name):
+def Non_thr_sond(track_name,time = 3):
 	player = subprocess.Popen(["omxplayer","-o","local",track_name],stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-	time.sleep(2)
+	time.sleep(time+2)
 	player.stdin.write("q")
 	# while pygame.mixer.music.get_busy() == True and exitFlag == 0:
 	# while pygame.mixer.music.get_busy() == True:
