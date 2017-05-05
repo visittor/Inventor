@@ -142,7 +142,7 @@ class Body(object):
 			self._fat.append(food.fat)
 			self._energy.append(food.energy)
 			self._vitA.append(food.vitA)
-			self._vitD.append(food.vitD)
+			self._vitD.append(self._AdevitD*1.3)
 			self._vitE.append(food.vitE)
 			self._vitK.append(food.vitK)
 			self._vitC.append(food.vitC)

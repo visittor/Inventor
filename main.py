@@ -281,7 +281,6 @@ if __name__ == '__main__':
 					header_text.create_text(self.Klass.gender,self.Klass.age,out)
 
 					percenVit = [[food.vitA/self.Klass.body.AdevitA,food.vitA/self.Klass.body.AdevitA],
-								[food.vitD/self.Klass.body.AdevitD,food.vitD/self.Klass.body.AdevitD],
 								[food.vitE/self.Klass.body.AdevitE,food.vitE/self.Klass.body.AdevitE],
 								[food.vitK/self.Klass.body.AdevitK,food.vitK/self.Klass.body.AdevitK],
 								[food.vitC/self.Klass.body.AdevitC,food.vitC/self.Klass.body.AdevitC],
