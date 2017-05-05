@@ -39,7 +39,7 @@ class Bar3(Bar):
 		pass
 class Hexagon(Polygon):
 	def __init__(self):
-		Polygon.__init__(self,[1357,700],[[1357,594],[1458,666],[1420,785],[1294,787	],[1257,666]])
+		Polygon.__init__(self,[1357,700],[[1357,594],[1458,666],[1420,785],[1294,787],[1257,666]])
 class En_Bar(Energy_Bar):
 	def __init__(self,lookup):
 		Energy_Bar.__init__(self,lookup,(846,750),250,387)

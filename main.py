@@ -244,16 +244,16 @@ if __name__ == '__main__':
 				pass
 		class _Hexagon(Polygon):
 			def __init__(self):
-				Polygon.__init__(self,[1353,684],[[1308,596],[1397,596],[1441,685],[1397,773],[1309,773],[1264,684]])
+				Polygon.__init__(self,[1357,700],[[1357,594],[1458,666],[1420,785],[1294,787],[1257,666]])
 		class _En_Bar(Energy_Bar):
 			def __init__(self,lookup):
-				Energy_Bar.__init__(self,lookup,(846,750),250,368)
+				Energy_Bar.__init__(self,lookup,(846,750),250,387)
 		class _Header_Text(object):
 			def __init__(self):
 				self.font = cv2.FONT_HERSHEY_SIMPLEX
 				self.dict_text = {"m":"boy","f":"girl","1":"0-6","2":"6-10","3":">10"}
 			def create_text(self,gender,age,out):
-				cv2.putText(out,self.dict_text[gender]+"\tage\t"+self.dict_text[age],(200,200), self.font, 2,(0,0,0),1,cv2.LINE_AA)
+				cv2.putText(out,self.dict_text[gender]+"	age: 	"+self.dict_text[age]+" years old",(200,200), self.font, 1,(0,0,0),1,cv2.LINE_AA)
 
 		def run(self):
 			print "Enter graphic thread"
