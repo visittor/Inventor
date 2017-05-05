@@ -42,6 +42,7 @@ class Set_interrupt(object):
 		except:
 			print "something wrong file input.py line something"
 		GPIO.add_event_detect(self.port,self.event,callback = lambda x: func(self.__class__),bouncetime = 1000)
+		return func
 
 	@classmethod
 	def add_attr(cls,name,value):
