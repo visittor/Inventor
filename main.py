@@ -104,6 +104,11 @@ if __name__ == '__main__':
 	def eat_select(cls):
 		#read rfid
 		print "Enter ..."
+		GPIO.remove_event_detect(29)
+		GPIO.remove_event_detect(31)
+		GPIO.remove_event_detect(33)
+		GPIO.remove_event_detect(35)
+		GPIO.remove_event_detect(37)
 		cls.gender_age_flag["age"] = 1
 		cls.gender_age_flag["gender"] = 1
 
@@ -116,6 +121,11 @@ if __name__ == '__main__':
 		cls.Doctor.diagnose(cls.body)
 		cls.body.show_illness()
 		cls.body.get_bodyShape()
+		GPIO.add_event_detect(29, GPIO.FALLING)
+		GPIO.add_event_detect(31, GPIO.FALLING)
+		GPIO.add_event_detect(33, GPIO.FALLING)
+		GPIO.add_event_detect(35, GPIO.FALLING)
+		GPIO.add_event_detect(37, GPIO.FALLING)
 
 		print "Exit..."	
 
