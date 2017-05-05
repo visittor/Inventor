@@ -121,11 +121,11 @@ if __name__ == '__main__':
 		cls.Doctor.diagnose(cls.body)
 		cls.body.show_illness()
 		cls.body.get_bodyShape()
-		GPIO.add_event_detect(29, GPIO.FALLING)
-		GPIO.add_event_detect(31, GPIO.FALLING)
-		GPIO.add_event_detect(33, GPIO.FALLING)
-		GPIO.add_event_detect(35, GPIO.FALLING)
-		GPIO.add_event_detect(37, GPIO.FALLING)
+		GPIO.add_event_detect(29,GPIO.FALLING,callback = lambda x: male_select(Set_interrupt),bouncetime = 1000)
+		GPIO.add_event_detect(31,GPIO.FALLING,callback = lambda x: female_select(Set_interrupt),bouncetime = 1000)
+		GPIO.add_event_detect(33,GPIO.FALLING,callback = lambda x: age1_select(Set_interrupt),bouncetime = 1000)
+		GPIO.add_event_detect(35,GPIO.FALLING,callback = lambda x: age2_select(Set_interrupt),bouncetime = 1000)
+		GPIO.add_event_detect(37,GPIO.FALLING,callback = lambda x: age3_select(Set_interrupt),bouncetime = 1000)
 
 		print "Exit..."	
 
