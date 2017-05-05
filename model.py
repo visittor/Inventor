@@ -152,25 +152,25 @@ class Body(object):
 			
 
 	def __digest(self):
-		if len(self._protein) > 10:
+		if len(self._protein) > 1:
 			self._protein.pop(0)
-		if len(self._carb) > 10:
+		if len(self._carb) > 1:
 			self._carb.pop(0)
-		if len(self._fat) >10:
+		if len(self._fat) >1:
 			self._fat.pop(0)
-		if len(self._energy) > 10:
+		if len(self._energy) > 1:
 			self._energy.pop(0)
-		if len(self._vitA) > 10:
+		if len(self._vitA) > 1:
 			self._vitA.pop(0)
-		if len(self._vitD) > 10:
+		if len(self._vitD) > 1:
 			self._vitD.pop(0)
-		if len(self._vitE) > 10:
+		if len(self._vitE) > 1:
 			self._vitE.pop(0)
-		if len(self._vitK) > 10:
+		if len(self._vitK) > 1:
 			self._vitK.pop(0)
-		if len(self._vitC) > 4:
+		if len(self._vitC) > 1:
 			self._vitC.pop(0)#vitC and vitB should always have len == 2 before pop. Always append b4 pop.
-		if len(self._vitB) > 4:#Note: vitC and vitB dissolve by water.Body cant store it.
+		if len(self._vitB) > 1:#Note: vitC and vitB dissolve by water.Body cant store it.
 			self._vitB.pop(0)
 		
 	@property
