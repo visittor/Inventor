@@ -81,7 +81,8 @@ class Sound(threading.Thread):
 def Non_thr_sond(track_name,time_play = 3):
 	player = subprocess.Popen(["omxplayer","-o","local",track_name],stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 	print "play_Sound"
-	time.sleep(time_play+2)
+	player.communicate()
+	# time.sleep(time_play+2)
 	# player.stdin.write("q")
 	# while pygame.mixer.music.get_busy() == True and exitFlag == 0:
 	# while pygame.mixer.music.get_busy() == True:
