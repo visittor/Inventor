@@ -269,9 +269,9 @@ if __name__ == '__main__':
 		class _Header_Text(object):
 			def __init__(self):
 				self.font = cv2.FONT_HERSHEY_SIMPLEX
-				self.dict_text = {"m":"boy","f":"girl","1":"0-6","2":"6-10","3":">10"}
+				self.dict_text = {"m":"Boy","f":"Girl","1":"0-6","2":"6-10","3":">10"}
 			def create_text(self,gender,age,out):
-				cv2.putText(out,self.dict_text[gender]+"	age: 	"+self.dict_text[age]+" years old",(200,200), self.font, 1,(0,0,0),1,cv2.LINE_AA)
+				cv2.putText(out,self.dict_text[gender]+"     age:     "+self.dict_text[age]+" years old",(200,200), self.font, 1,(0,0,0),1,cv2.LINE_AA)
 
 		def run(self):
 			print "Enter graphic thread"

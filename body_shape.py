@@ -14,6 +14,7 @@ def body_shape(report):
 		Set_interrupt.play_list.append(["Sound/im_weak.mp3",3])
 		print "I'm thin"
 		GPIO.output(7,1)
-	elif report[report["'lack_vit'"]]>1:
+	elif report[report["lack_vit"]]>0.5:
 		Set_interrupt.play_list.append(["Sound/food_ok.mp3",3])
+		print "I'm ready"
 		GPIO.output(7,1)
