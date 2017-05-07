@@ -256,7 +256,7 @@ class Body(object):
 		self._report["vitC"] = sum(self._vitC)/(len(self._vitC)*self._AdevitC) if len(self._vitC) != 0 else 0
 		self._report["vitB"] = sum(self._vitB)/(len(self._vitB)*self._AdevitB) if len(self._vitB) != 0 else 0
 
-		min = 1
+		min = 100
 		minKey = None
 		for key,value in self._report.items():
 			if value < min:
